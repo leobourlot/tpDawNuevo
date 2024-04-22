@@ -27,6 +27,18 @@ export class UsuariosService {
         return usuario
     }
 
+    async obtenerUsuarioPorDni(
+        dni: string,
+    ): Promise<Usuario> {
+        const usuario: Usuario = await this.usuariosRepo.findOne({
+            where: {
+                dni: dni,
+                estado: EstadosUsuarioEnum.ACTIVO
+            },
+        });
+        return usuario
+    }
+
     async obtenerUsuarios(): Promise<Usuario[]> {
         const usuarios: Usuario[] = await this.usuariosRepo.find({
             where: {
@@ -44,9 +56,26 @@ export class UsuariosService {
             },
         });
         if (!usuario) {
-            throw new UnauthorizedException('No existe un usuario con ese nombre de usuario.');
+            throw new UnauthorizedException('No existe un usuario con ese id de usuario.');
         }
         return usuario
+    }
+
+    async eliminarUsuario(idUsuario: number): Promise<Usuario> {
+        const usuario = await this.usuariosRepo.findOne({
+            where: {
+                idUsuario,
+                estado: EstadosUsuarioEnum.ACTIVO,
+            },
+        });
+        if (!usuario) {
+            throw new UnauthorizedException('No existe un usuario con ese id de usuario.');
+        }
+
+        usuario.estado = EstadosUsuarioEnum.BAJA;
+
+        return await this.usuariosRepo.save(usuario);
+        
     }
 
     async registroUsuario(datosNuevoUsuario: UsuarioDto): Promise<Usuario> {

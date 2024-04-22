@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { UsuariosService } from "../services/usuarios.services";
 import { Roles } from "../decorators/roles.decorator";
 import { RolesEnum } from "../enums/roles-enum";
@@ -19,6 +19,34 @@ export class UsuariosController {
     @UseGuards(AuthGuard)
     async getUsuarios() {
         return await this.usuariosService.obtenerUsuarios();
+    }
+    
+    @Get(":idUsuario")
+    @Roles([RolesEnum.ADMINISTRADOR])
+    @UseGuards(AuthGuard)
+    async getUsuarioPorId(@Param("idUsuario") idUsuario: number) {
+        return await this.usuariosService.findOneById(idUsuario);
+    }
+    
+    @Get("nombreUsuario/:nombreUsuario")
+    @Roles([RolesEnum.ADMINISTRADOR])
+    @UseGuards(AuthGuard)
+    async getUsuarioPorNombreUsuario(@Param("nombreUsuario") nombreUsuario: string) {
+        return await this.usuariosService.obtenerUsuarioPorNombreDeUsuario(nombreUsuario);
+    }
+    
+    @Get("dni/:dni")
+    @Roles([RolesEnum.ADMINISTRADOR])
+    @UseGuards(AuthGuard)
+    async getUsuarioPorDni(@Param("dni") dni: string) {
+        return await this.usuariosService.obtenerUsuarioPorDni(dni);
+    }
+    
+    @Delete("eliminar/:idUsuario")
+    @Roles([RolesEnum.ADMINISTRADOR])
+    @UseGuards(AuthGuard)
+    async eliminarUsuario(@Param("idUsuario") idUsuario: number) {
+        return await this.usuariosService.eliminarUsuario(idUsuario);
     }
 
     @Post()
