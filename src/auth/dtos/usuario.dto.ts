@@ -1,4 +1,4 @@
-import { IsEnum, IsHash, IsNotEmpty, IsNumberString, IsString, MaxLength, MinLength, isHash } from "class-validator"
+import { IsEnum, IsNotEmpty, IsNumberString, IsString, MaxLength, MinLength } from "class-validator"
 import { RolesEnum } from "../enums/roles-enum"
 
 

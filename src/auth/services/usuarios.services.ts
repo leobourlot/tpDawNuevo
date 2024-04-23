@@ -75,7 +75,7 @@ export class UsuariosService {
         usuario.estado = EstadosUsuarioEnum.BAJA;
 
         return await this.usuariosRepo.save(usuario);
-        
+
     }
 
     async registroUsuario(datosNuevoUsuario: UsuarioDto): Promise<Usuario> {
