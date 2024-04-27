@@ -1,40 +1,123 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Actividad } from "../entities/actividad.entity";
-import { Repository } from "typeorm";
+import { FindOneOptions, Repository } from "typeorm";
 import { ActividadDto } from "../dtos/actividad.dto";
 import { PrioridadActividadEnum } from "../enums/prioridadActividad.enum";
 import { EstadosActividadEnum } from "../enums/estadoActividad.enum";
+import { crearActividadDto } from "../dtos/crearActividad.dto";
+import { UsuariosService } from "src/auth/services/usuarios.services";
+import { Usuario } from "src/auth/entities/usuario.entity";
 
 
 @Injectable()
 export class ActividadesService {
 
-    constructor(@InjectRepository(Actividad) private actividadesRepo: Repository<Actividad>) {
+    constructor(@InjectRepository(Actividad) private actividadesRepo: Repository<Actividad>, private usuariosService: UsuariosService) {
 
     }
 
-    async nuevaActividad(datosNuevaActividad: ActividadDto): Promise<Actividad> {
-        const { descripcion, idUsuario, idUsuarioModificacion, fechaModificacion } = datosNuevaActividad
+    // async nuevaActividad(datosNuevaActividad: ActividadDto): Promise<Actividad> {
+    //     const { descripcion, idUsuario, idUsuarioModificacion, fechaModificacion } = datosNuevaActividad
 
-        // Crear nueva actividad
-        const nuevaActividad = this.actividadesRepo.create({
-            descripcion,
-            idUsuario,
-            idUsuarioModificacion,
-            fechaModificacion,
-            prioridad: PrioridadActividadEnum.MEDIA,
-            estado: EstadosActividadEnum.PENDIENTE,            
-        });
+    //     // Crear nueva actividad
+    //     const nuevaActividad = this.actividadesRepo.create({
+    //         descripcion,
+    //         idUsuario,
+    //         idUsuarioModificacion,
+    //         fechaModificacion,
+    //         prioridad: PrioridadActividadEnum.MEDIA,
+    //         estado: EstadosActividadEnum.PENDIENTE,            
+    //     });
 
-        // Guardar el nuevo usuario en la base de datos
+    //     // Guardar el nuevo usuario en la base de datos
+    //     try {
+    //         await this.actividadesRepo.save(nuevaActividad);
+    //     } catch (error) {
+    //         throw new BadRequestException('Error al registrar el usuario.');
+    //     }
+
+    //     return nuevaActividad
+    // }
+
+    async obtenerActividades(): Promise<Actividad[]> {
         try {
-            await this.actividadesRepo.save(nuevaActividad);
+            const actividades: Actividad[] = await this.actividadesRepo.find();
+            return actividades;
         } catch (error) {
-            throw new BadRequestException('Error al registrar el usuario.');
+            // Manejo de errores aquí
+            throw new Error('Ocurrió un error al obtener las actividades.');
+        }
+    }
+
+    async obtenerActividadPorId(id: number): Promise<Actividad> {
+        const opciones: FindOneOptions<Actividad> = { where: { idActividad: id } };
+        return await this.actividadesRepo.findOneOrFail(opciones);
+    }
+
+    async nuevaActividad(crearActividadDto: crearActividadDto, usuario: Usuario) {
+        
+        const actividad: Actividad = this.actividadesRepo.create();
+
+        actividad.descripcion = crearActividadDto.descripcion;
+        actividad.idUsuarioActual = await this.usuariosService.findOneById(crearActividadDto.idUsuarioActual);
+        actividad.prioridad = crearActividadDto.prioridad;
+        actividad.fechaModificacion = new Date;
+        actividad.idUsuarioModificacion = usuario;
+        
+        await this.actividadesRepo.save(actividad);
+                
+    }
+
+    // async registroActividad(datosNuevaActividad: ActividadDto): Promise<Actividad> {
+    //     const { descripcion, idUsuario, idUsuarioModificacion, fechaModificacion, prioridad } = datosNuevaActividad;
+
+    //     // Crear una nueva actividad
+    //     const nuevaActividad = this.actividadesRepo.create({
+    //         descripcion,
+    //         idUsuario,
+    //         idUsuarioModificacion,
+    //         fechaModificacion, // Mantenemos la fecha como un objeto Date
+    //         prioridad,
+    //         // estado,
+    //     });
+
+    //     // Guardar la nueva actividad en la base de datos
+    //     try {
+    //         await this.actividadesRepo.save(nuevaActividad);
+    //     } catch (error) {
+    //         throw new BadRequestException('Error al registrar la actividad.');
+    //     }
+
+    //     return nuevaActividad;
+    // }
+
+    // async actualizarActividad(id: number, actividadDto: ActividadDto): Promise<Actividad> {
+    //     const actividadExistente = await this.obtenerActividadPorId(id);
+
+    //     actividadExistente.descripcion = actividadDto.descripcion;
+    //     actividadExistente.idUsuarioModificacion = actividadDto.idUsuarioModificacion;
+    //     actividadExistente.fechaModificacion = actividadDto.fechaModificacion;
+
+    //     try {
+    //         await this.actividadesRepo.save(actividadExistente);
+    //     } catch (error) {
+    //         throw new BadRequestException('Error al actualizar la actividad.');
+    //     }
+
+    //     return actividadExistente;
+    // }
+
+    async eliminarActividad(idActividad: number): Promise<string> {
+        const actividadExistente = await this.actividadesRepo.findOne({ where: { idActividad } });
+
+        if (!actividadExistente) {
+            throw new NotFoundException('La actividad a eliminar no existe.');
         }
 
-        return nuevaActividad
+        await this.actividadesRepo.remove(actividadExistente);
+
+        return `La actividad con ID ${idActividad} fue eliminada correctamente.`;
     }
 
 }

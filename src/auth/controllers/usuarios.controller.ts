@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { UsuariosService } from "../services/usuarios.services";
 import { Roles } from "../decorators/roles.decorator";
 import { RolesEnum } from "../enums/roles-enum";
@@ -49,9 +49,16 @@ export class UsuariosController {
         return await this.usuariosService.eliminarUsuario(idUsuario);
     }
 
-    @Post()
+    @Post("nuevo")
     async postUsuarioNuevo(@Body() nuevoUsuario: UsuarioDto) {
         return await this.usuariosService.registroUsuario(nuevoUsuario);
+    }
+
+    @Put('/:id')
+    async actualizarUsuario(@Param('id') id: number,
+        @Body() usuarioActualizado: UsuarioDto,
+    ) {
+        return await this.usuariosService.actualizarUsuario(id, usuarioActualizado);
     }
 
 }

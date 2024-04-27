@@ -1,6 +1,7 @@
 import { IsDate, IsEnum, IsNotEmpty, IsNumber, IsString } from "class-validator";
 import { PrioridadActividadEnum } from "../enums/prioridadActividad.enum";
 import { EstadosActividadEnum } from "../enums/estadoActividad.enum";
+import { OperacionActividadEnum } from "../enums/operacionActividad.enum";
 
 
 export class ActividadDto{
@@ -23,9 +24,13 @@ export class ActividadDto{
     @IsNotEmpty()
     prioridad: PrioridadActividadEnum
 
-    @IsEnum(EstadosActividadEnum)
+    // @IsEnum(EstadosActividadEnum)
+    // @IsNotEmpty()
+    // estado: EstadosActividadEnum
+    
+    @IsEnum(OperacionActividadEnum)
     @IsNotEmpty()
-    estado: EstadosActividadEnum
+    estado: OperacionActividadEnum
 
 
 }

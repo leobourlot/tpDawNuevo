@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, HttpException, HttpStatus, Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Usuario } from "../entities/usuario.entity";
 import { Repository } from "typeorm";
@@ -113,5 +113,45 @@ export class UsuariosService {
         }
 
         return nuevoUsuario
+    }
+
+    async actualizarUsuario(id: number, usuarioDto: UsuarioDto) {
+        const {dni, email, clave, nombreUsuario, apellido, nombres, rol} = usuarioDto;
+        const usuario = await this.usuariosRepo.findOne({
+            where: {
+                idUsuario: id,
+            },
+        });
+
+        if (!usuario) {
+            throw new HttpException('El usuario no existe', HttpStatus.NOT_FOUND);
+        }
+
+        console.log(apellido);
+
+        if (dni !== undefined) {
+            usuarioDto.dni = usuario.dni;
+        }
+        if (email !== undefined) {
+            usuarioDto.email = usuario.email;
+        }
+        if (clave !== undefined) {
+            usuarioDto.clave = usuario.clave;
+        }
+        if (nombreUsuario !== undefined) {
+            usuarioDto.nombreUsuario = usuario.nombreUsuario;
+        }
+        if (apellido !== undefined) {
+            usuarioDto.apellido = usuario.apellido;
+        }
+        if (nombres !== undefined) {
+            usuarioDto.nombres = usuario.nombres;
+        }
+        if (rol !== undefined) {
+            usuarioDto.rol = usuario.rol;
+        }
+
+        await this.usuariosRepo.update(id, usuarioDto);
+        return usuario;
     }
 }

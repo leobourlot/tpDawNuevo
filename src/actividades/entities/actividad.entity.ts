@@ -1,29 +1,36 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { EstadosActividadEnum } from '../enums/estadoActividad.enum';
 import { PrioridadActividadEnum } from '../enums/prioridadActividad.enum';
+import { OperacionActividadEnum } from '../enums/operacionActividad.enum';
+import { Usuario } from 'src/auth/entities/usuario.entity';
 
 @Entity({name: 'actividades'})
 export class Actividad{
 
     @PrimaryGeneratedColumn()
-    idActividad: number
+    idActividad: number;
 
     @Column()
-    descripcion: string
+    descripcion: string;
 
-    @Column()
-    idUsuario: number
+    @ManyToOne(()=> Usuario)
+    @JoinColumn({name: 'idUsuarioActual'})
+    idUsuarioActual: Usuario;
     
-    @Column()
-    idUsuarioModificacion: number
+    @ManyToOne(()=> Usuario)
+    @JoinColumn({name: 'idUsuarioModificacion'})
+    idUsuarioModificacion: Usuario;
 
     @Column()
-    fechaModificacion: Date
+    fechaModificacion: Date;
 
     @Column({type: 'enum', enum: PrioridadActividadEnum})
-    prioridad: PrioridadActividadEnum
+    prioridad: PrioridadActividadEnum;
 
-    @Column({type: 'enum', enum: EstadosActividadEnum})
-    estado: EstadosActividadEnum
+    @Column({type: 'enum', enum: EstadosActividadEnum, default: EstadosActividadEnum.PENDIENTE})
+    estado: EstadosActividadEnum;
+    
+    @Column({type: 'enum', enum: OperacionActividadEnum})
+    operacion: OperacionActividadEnum;
 
 }

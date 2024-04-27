@@ -10,7 +10,7 @@ import { UsuariosController } from './controllers/usuarios.controller';
     controllers: [AuthController, UsuariosController],
     providers: [AuthService, UsuariosService],
     imports: [TypeOrmModule.forFeature([Usuario])],
-    exports: []
+    exports: [UsuariosService]
 })
 export class AuthModule{
 
