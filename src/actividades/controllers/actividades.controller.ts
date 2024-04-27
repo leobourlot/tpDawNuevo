@@ -21,10 +21,12 @@ export class ActividadesController {
     //     return await this.actividadesService.nuevaActividad(nuevaActividad);
     // }
 
+    @ApiBearerAuth()
+    @Roles([RolesEnum.ADMINISTRADOR, RolesEnum.EJECUTOR])
+    @UseGuards(AuthGuard)
     @Get()
-    @Roles([RolesEnum.ADMINISTRADOR])
-    async obtenerActividades(): Promise<Actividad[]> {
-        return await this.actividadesService.obtenerActividades();
+    async obtenerActividades(@Req()request : Request) {
+        return await this.actividadesService.obtenerActividades(request['usuario']);
     }
 
     @Get("/:id")
@@ -48,7 +50,9 @@ export class ActividadesController {
     //     return await this.actividadesService.actualizarActividad(id, actividadDto);
     // }
 
-    @Delete("/:id")
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @Delete("eliminar/:id")
     @Roles([RolesEnum.ADMINISTRADOR])
     async eliminarActividad(@Param("id") id: number): Promise<{ mensaje: string }> {
         const actividadId = id;

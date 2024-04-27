@@ -28,9 +28,9 @@ export class ActividadDto{
     // @IsNotEmpty()
     // estado: EstadosActividadEnum
     
-    @IsEnum(OperacionActividadEnum)
+    @IsEnum(EstadosActividadEnum)
     @IsNotEmpty()
-    estado: OperacionActividadEnum
+    estado: EstadosActividadEnum
 
 
 }

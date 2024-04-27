@@ -8,6 +8,7 @@ import { EstadosActividadEnum } from "../enums/estadoActividad.enum";
 import { crearActividadDto } from "../dtos/crearActividad.dto";
 import { UsuariosService } from "src/auth/services/usuarios.services";
 import { Usuario } from "src/auth/entities/usuario.entity";
+import { RolesEnum } from "src/auth/enums/roles-enum";
 
 
 @Injectable()
@@ -40,14 +41,23 @@ export class ActividadesService {
     //     return nuevaActividad
     // }
 
-    async obtenerActividades(): Promise<Actividad[]> {
-        try {
-            const actividades: Actividad[] = await this.actividadesRepo.find();
-            return actividades;
-        } catch (error) {
-            // Manejo de errores aquí
-            throw new Error('Ocurrió un error al obtener las actividades.');
+    async obtenerActividades(usuario: Usuario): Promise<Actividad[]> {
+        
+        const rol: RolesEnum = usuario.rol;
+
+        const consulta = this.actividadesRepo
+        .createQueryBuilder('actividades')
+        .innerJoin('actividades.idUsuarioActual', 'usuario');
+
+        if(rol === RolesEnum.EJECUTOR){
+            consulta.where('actividades.estado = :estado',{
+                estado: EstadosActividadEnum.PENDIENTE
+            }).andWhere('usuario.id = :idUsuario', {
+                idUsuario: usuario.idUsuario
+            })
         }
+
+        return await consulta.getMany();
     }
 
     async obtenerActividadPorId(id: number): Promise<Actividad> {
@@ -69,45 +79,6 @@ export class ActividadesService {
                 
     }
 
-    // async registroActividad(datosNuevaActividad: ActividadDto): Promise<Actividad> {
-    //     const { descripcion, idUsuario, idUsuarioModificacion, fechaModificacion, prioridad } = datosNuevaActividad;
-
-    //     // Crear una nueva actividad
-    //     const nuevaActividad = this.actividadesRepo.create({
-    //         descripcion,
-    //         idUsuario,
-    //         idUsuarioModificacion,
-    //         fechaModificacion, // Mantenemos la fecha como un objeto Date
-    //         prioridad,
-    //         // estado,
-    //     });
-
-    //     // Guardar la nueva actividad en la base de datos
-    //     try {
-    //         await this.actividadesRepo.save(nuevaActividad);
-    //     } catch (error) {
-    //         throw new BadRequestException('Error al registrar la actividad.');
-    //     }
-
-    //     return nuevaActividad;
-    // }
-
-    // async actualizarActividad(id: number, actividadDto: ActividadDto): Promise<Actividad> {
-    //     const actividadExistente = await this.obtenerActividadPorId(id);
-
-    //     actividadExistente.descripcion = actividadDto.descripcion;
-    //     actividadExistente.idUsuarioModificacion = actividadDto.idUsuarioModificacion;
-    //     actividadExistente.fechaModificacion = actividadDto.fechaModificacion;
-
-    //     try {
-    //         await this.actividadesRepo.save(actividadExistente);
-    //     } catch (error) {
-    //         throw new BadRequestException('Error al actualizar la actividad.');
-    //     }
-
-    //     return actividadExistente;
-    // }
-
     async eliminarActividad(idActividad: number): Promise<string> {
         const actividadExistente = await this.actividadesRepo.findOne({ where: { idActividad } });
 
@@ -115,7 +86,9 @@ export class ActividadesService {
             throw new NotFoundException('La actividad a eliminar no existe.');
         }
 
-        await this.actividadesRepo.remove(actividadExistente);
+        actividadExistente.estado = EstadosActividadEnum.ELIMINADO;
+
+        await this.actividadesRepo.save(actividadExistente);
 
         return `La actividad con ID ${idActividad} fue eliminada correctamente.`;
     }

@@ -30,7 +30,4 @@ export class Actividad{
     @Column({type: 'enum', enum: EstadosActividadEnum, default: EstadosActividadEnum.PENDIENTE})
     estado: EstadosActividadEnum;
     
-    @Column({type: 'enum', enum: OperacionActividadEnum})
-    operacion: OperacionActividadEnum;
-
 }

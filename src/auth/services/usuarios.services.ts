@@ -117,6 +117,7 @@ export class UsuariosService {
 
     async actualizarUsuario(id: number, usuarioDto: UsuarioDto) {
         const {dni, email, clave, nombreUsuario, apellido, nombres, rol} = usuarioDto;
+        console.log(apellido);
         const usuario = await this.usuariosRepo.findOne({
             where: {
                 idUsuario: id,
@@ -127,27 +128,28 @@ export class UsuariosService {
             throw new HttpException('El usuario no existe', HttpStatus.NOT_FOUND);
         }
 
-        console.log(apellido);
+        console.log(usuario.apellido);
 
-        if (dni !== undefined) {
+        if (dni == undefined) {
             usuarioDto.dni = usuario.dni;
         }
-        if (email !== undefined) {
+        if (email == undefined) {
             usuarioDto.email = usuario.email;
         }
-        if (clave !== undefined) {
+        if (clave == undefined) {
             usuarioDto.clave = usuario.clave;
         }
-        if (nombreUsuario !== undefined) {
+        if (nombreUsuario == undefined) {
             usuarioDto.nombreUsuario = usuario.nombreUsuario;
         }
-        if (apellido !== undefined) {
+        if (apellido == undefined) {
+            console.log("Entró a la condición de apellido");
             usuarioDto.apellido = usuario.apellido;
         }
-        if (nombres !== undefined) {
+        if (nombres == undefined) {
             usuarioDto.nombres = usuario.nombres;
         }
-        if (rol !== undefined) {
+        if (rol == undefined) {
             usuarioDto.rol = usuario.rol;
         }
 

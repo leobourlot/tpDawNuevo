@@ -54,7 +54,7 @@ export class UsuariosController {
         return await this.usuariosService.registroUsuario(nuevoUsuario);
     }
 
-    @Put('/:id')
+    @Put("modificar/:id")
     async actualizarUsuario(@Param('id') id: number,
         @Body() usuarioActualizado: UsuarioDto,
     ) {
