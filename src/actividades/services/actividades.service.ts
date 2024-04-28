@@ -27,7 +27,7 @@ export class ActividadesService {
 
         if (rol === RolesEnum.EJECUTOR) {
             consulta.where('actividades.estado = :estado', {
-                estado: EstadosActividadEnum.PENDIENTE                
+                estado: EstadosActividadEnum.PENDIENTE
             }).andWhere('usuario.idUsuario = :idUsuario', {
                 idUsuario: usuario.idUsuario
             })
@@ -56,23 +56,28 @@ export class ActividadesService {
     }
 
     async actualizarActividad(id: number, actualizarActividadDto: ActualizarActividadDto, usuario: Usuario): Promise<Actividad> {
-        
+
         const actividadExistente: Actividad = await this.obtenerActividadPorId(id);
 
-        if(!actividadExistente){
+        if (!actividadExistente) {
             throw new BadRequestException('La actividad no existe.')
         }
 
-        if(usuario.rol === RolesEnum.ADMINISTRADOR){
+        if (usuario.rol === RolesEnum.ADMINISTRADOR) {
             actividadExistente.descripcion = actualizarActividadDto.descripcion;
             actividadExistente.prioridad = actualizarActividadDto.prioridad
-        } else if(usuario.rol === RolesEnum.EJECUTOR){
+        } else if (usuario.rol === RolesEnum.EJECUTOR) {
+
+            if (actualizarActividadDto.estado === EstadosActividadEnum.PENDIENTE) {
+                throw new BadRequestException('No se tiene el permiso para cambiar el estado a "PENDIENTE".');
+            }
+
             actividadExistente.estado = actualizarActividadDto.estado
         }
-        
+
         actividadExistente.idUsuarioModificacion = usuario;
         actividadExistente.fechaModificacion = new Date;
-        
+
         try {
             await this.actividadesRepo.save(actividadExistente);
         } catch (error) {
