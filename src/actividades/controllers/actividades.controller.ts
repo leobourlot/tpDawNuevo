@@ -15,7 +15,7 @@ export class ActividadesController {
     constructor(private actividadesService: ActividadesService) {
 
     }
-
+ 
     @ApiBearerAuth()
     @Roles([RolesEnum.ADMINISTRADOR, RolesEnum.EJECUTOR])
     @UseGuards(AuthGuard)
