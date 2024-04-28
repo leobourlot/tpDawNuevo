@@ -57,7 +57,7 @@ export class ActividadesController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard)
     @Delete("eliminar/:id")
-    @Roles([RolesEnum.ADMINISTRADOR])
+    @Roles([RolesEnum.ADMINISTRADOR, RolesEnum.EJECUTOR])
     async eliminarActividad(@Param("id") id: number): Promise<{ mensaje: string }> {
         const actividadId = id;
         const mensaje = await this.actividadesService.eliminarActividad(actividadId);
