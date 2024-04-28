@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from "@nestjs/common";
-import { ActividadDto } from "../dtos/actividad.dto";
+import { ActualizarActividadDto } from "../dtos/actualizarActividad.dto";
 import { ActividadesService } from "../services/actividades.service";
 import { Actividad } from "../entities/actividad.entity";
 import { Roles } from "src/auth/decorators/roles.decorator";
@@ -16,11 +16,6 @@ export class ActividadesController {
 
     }
 
-    // @Post("nueva")
-    // async postActividadNueva(@Body() nuevaActividad: ActividadDto) {
-    //     return await this.actividadesService.nuevaActividad(nuevaActividad);
-    // }
-
     @ApiBearerAuth()
     @Roles([RolesEnum.ADMINISTRADOR, RolesEnum.EJECUTOR])
     @UseGuards(AuthGuard)
@@ -29,6 +24,9 @@ export class ActividadesController {
         return await this.actividadesService.obtenerActividades(request['usuario']);
     }
 
+    @ApiBearerAuth()
+    @Roles([RolesEnum.ADMINISTRADOR])
+    @UseGuards(AuthGuard)
     @Get("/:id")
     async obtenerActividadPorId(@Param("id") id: number): Promise<Actividad> {
         return await this.actividadesService.obtenerActividadPorId(id);
@@ -45,10 +43,16 @@ export class ActividadesController {
         return await this.actividadesService.nuevaActividad(crearActividadDto, request['usuario']);
     }
 
-    // @Put("/:id")
-    // async actualizarActividad(@Param("id") id: number, @Body() actividadDto: ActividadDto): Promise<Actividad> {
-    //     return await this.actividadesService.actualizarActividad(id, actividadDto);
-    // }
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @Roles([RolesEnum.ADMINISTRADOR, RolesEnum.EJECUTOR])
+    @Put("actualizar/:id")
+    async actualizarActividad(
+        @Req() request: Request,
+        @Param("id") id: number, 
+        @Body() actualizarActividadDto: ActualizarActividadDto): Promise<Actividad> {
+        return await this.actividadesService.actualizarActividad(id, actualizarActividadDto, request['usuario']);
+    }
 
     @ApiBearerAuth()
     @UseGuards(AuthGuard)

@@ -3,9 +3,10 @@ import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { JwtModule } from '@nestjs/jwt';
 import { ActividadesModule } from './actividades/actividades.module';
+import { AuditoriaActividadesModule } from './auditoriaActividades/auditoriaActividades.module';
 
 @Module({
-  imports: [AuthModule, ActividadesModule, TypeOrmModule.forRoot({
+  imports: [AuthModule, ActividadesModule, AuditoriaActividadesModule, TypeOrmModule.forRoot({
     type: 'mysql',
     host:'localhost',
     port: 3306,
@@ -13,7 +14,7 @@ import { ActividadesModule } from './actividades/actividades.module';
     password: 'InsPFHPE-E-FycfC',
     database: 'tpdaw',
     autoLoadEntities: true,
-    synchronize: true,
+    synchronize: false,
     // logging: true,
     // logger: 'advanced-console'
   }),

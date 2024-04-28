@@ -2,8 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { InjectRepository } from "@nestjs/typeorm";
 import { Actividad } from "../entities/actividad.entity";
 import { FindOneOptions, Repository } from "typeorm";
-import { ActividadDto } from "../dtos/actividad.dto";
-import { PrioridadActividadEnum } from "../enums/prioridadActividad.enum";
+import { ActualizarActividadDto } from "../dtos/actualizarActividad.dto";
 import { EstadosActividadEnum } from "../enums/estadoActividad.enum";
 import { crearActividadDto } from "../dtos/crearActividad.dto";
 import { UsuariosService } from "src/auth/services/usuarios.services";
@@ -18,41 +17,18 @@ export class ActividadesService {
 
     }
 
-    // async nuevaActividad(datosNuevaActividad: ActividadDto): Promise<Actividad> {
-    //     const { descripcion, idUsuario, idUsuarioModificacion, fechaModificacion } = datosNuevaActividad
-
-    //     // Crear nueva actividad
-    //     const nuevaActividad = this.actividadesRepo.create({
-    //         descripcion,
-    //         idUsuario,
-    //         idUsuarioModificacion,
-    //         fechaModificacion,
-    //         prioridad: PrioridadActividadEnum.MEDIA,
-    //         estado: EstadosActividadEnum.PENDIENTE,            
-    //     });
-
-    //     // Guardar el nuevo usuario en la base de datos
-    //     try {
-    //         await this.actividadesRepo.save(nuevaActividad);
-    //     } catch (error) {
-    //         throw new BadRequestException('Error al registrar el usuario.');
-    //     }
-
-    //     return nuevaActividad
-    // }
-
     async obtenerActividades(usuario: Usuario): Promise<Actividad[]> {
-        
+
         const rol: RolesEnum = usuario.rol;
 
         const consulta = this.actividadesRepo
-        .createQueryBuilder('actividades')
-        .innerJoin('actividades.idUsuarioActual', 'usuario');
+            .createQueryBuilder('actividades')
+            .innerJoin('actividades.idUsuarioActual', 'usuario');
 
-        if(rol === RolesEnum.EJECUTOR){
-            consulta.where('actividades.estado = :estado',{
-                estado: EstadosActividadEnum.PENDIENTE
-            }).andWhere('usuario.id = :idUsuario', {
+        if (rol === RolesEnum.EJECUTOR) {
+            consulta.where('actividades.estado = :estado', {
+                estado: EstadosActividadEnum.PENDIENTE                
+            }).andWhere('usuario.idUsuario = :idUsuario', {
                 idUsuario: usuario.idUsuario
             })
         }
@@ -66,7 +42,7 @@ export class ActividadesService {
     }
 
     async nuevaActividad(crearActividadDto: crearActividadDto, usuario: Usuario) {
-        
+
         const actividad: Actividad = this.actividadesRepo.create();
 
         actividad.descripcion = crearActividadDto.descripcion;
@@ -74,9 +50,32 @@ export class ActividadesService {
         actividad.prioridad = crearActividadDto.prioridad;
         actividad.fechaModificacion = new Date;
         actividad.idUsuarioModificacion = usuario;
-        
+
         await this.actividadesRepo.save(actividad);
-                
+
+    }
+
+    async actualizarActividad(id: number, actualizarActividadDto: ActualizarActividadDto, usuario: Usuario): Promise<Actividad> {
+        
+        const actividadExistente: Actividad = await this.obtenerActividadPorId(id);
+
+        if(!actividadExistente){
+            throw new BadRequestException('La actividad no existe.')
+        }
+
+        actividadExistente.descripcion = actualizarActividadDto.descripcion;
+        actividadExistente.idUsuarioModificacion = usuario;
+        actividadExistente.fechaModificacion = new Date;
+        actividadExistente.estado = actualizarActividadDto.estado
+        actividadExistente.prioridad = actualizarActividadDto.prioridad
+
+        try {
+            await this.actividadesRepo.save(actividadExistente);
+        } catch (error) {
+            throw new BadRequestException('Error al actualizar la actividad.');
+        }
+
+        return actividadExistente;
     }
 
     async eliminarActividad(idActividad: number): Promise<string> {
