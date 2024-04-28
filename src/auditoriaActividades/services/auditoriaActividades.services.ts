@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Param } from "@nestjs/common";
 import { AuditoriaActividades } from "../entities/auditoriaActividades.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -53,10 +53,13 @@ export class AuditoriaActividadesService{
 
     async obtenerActividadesUsuario(usuario: Usuario): Promise<AuditoriaActividades[]> {   // vvvvvvvveeeeeeeeeerrrrrrrrrr, devuelve todas y no solo la de un usuario
 
-        const consulta = this.auditoriaActividadesRepo
-            .createQueryBuilder('actividadesAuditoria')
-            .innerJoin('actividadesAuditoria.idUsuarioModificacion', 'usuario');
-        return await consulta.getMany();
+        const actividadesUsuario: AuditoriaActividades[] = await this.auditoriaActividadesRepo.find({
+            where: {
+                idUsuarioModificacion: usuario
+            }
+        });
+        return actividadesUsuario; 
+        
     }
 
 
