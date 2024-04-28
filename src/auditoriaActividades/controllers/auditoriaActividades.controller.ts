@@ -37,6 +37,22 @@ export class AuditoriaActividadesController {
     async obtenerFinalizadas() {
         return await this.auditoriaActividadesService.obtenerFinalizadas();
     }
+    
+    @UseGuards(AuthModule)
+    @ApiBearerAuth()
+    @Roles([RolesEnum.ADMINISTRADOR])
+    @Get('/actividadesFinalizadas')
+    async obtenerPendientes() {
+        return await this.auditoriaActividadesService.obtenerPendientes();
+    }
+    
+    @UseGuards(AuthModule)
+    @ApiBearerAuth()
+    @Roles([RolesEnum.ADMINISTRADOR])
+    @Get('/actividadesEliminadas')
+    async obtenerEliminadas() {
+        return await this.auditoriaActividadesService.obtenerEliminadas();
+    }
 
     @UseGuards(AuthModule)
     @ApiBearerAuth()
@@ -48,6 +64,30 @@ export class AuditoriaActividadesController {
             throw new NotFoundException('Usuario no encontrado');
         }
         return await this.auditoriaActividadesService.obtenerActividadesUsuario(usuario);
+    }
+
+    @UseGuards(AuthModule)
+    @ApiBearerAuth()
+    @Roles([RolesEnum.ADMINISTRADOR])
+    @Get('/actividadesPendientesUsuario/:id')
+    async obtenerActividadesPendientesUsuario(@Param('id') id: number) {
+        const usuario: Usuario = await this.usuariosService.findOneById(id);
+        if (!usuario) {
+            throw new NotFoundException('Usuario no encontrado');
+        }
+        return await this.auditoriaActividadesService.obtenerActividadesPendientesUsuario(usuario);
+    }
+    
+    @UseGuards(AuthModule)
+    @ApiBearerAuth()
+    @Roles([RolesEnum.ADMINISTRADOR])
+    @Get('/actividadesEliminadasUsuario/:id')
+    async obtenerActividadesEliminadasUsuario(@Param('id') id: number) {
+        const usuario: Usuario = await this.usuariosService.findOneById(id);
+        if (!usuario) {
+            throw new NotFoundException('Usuario no encontrado');
+        }
+        return await this.auditoriaActividadesService.obtenerActividadesEliminadasUsuario(usuario);
     }
 
     // async obtenerActividadesUsuario(idUsuarioModificacion: Usuario){

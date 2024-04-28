@@ -39,19 +39,27 @@ export class AuditoriaActividadesService{
         
     }
 
-    // async obtenerActividadesUsuario(idUsuario: number): Promise<AuditoriaActividades[]>{
-    //     const opciones: FindOneOptions<Actividad> = { where: { idActividad: id } };
+    async obtenerPendientes(): Promise<AuditoriaActividades[]>{
+        const actividadesPendientes: AuditoriaActividades[] = await this.auditoriaActividadesRepo.find({
+            where: {
+                estado: EstadosActividadEnum.PENDIENTE
+            },
+        });
+        return actividadesPendientes    
         
-    //     const actividadesUsuario: AuditoriaActividades[] = await this.auditoriaActividadesRepo.find({
-    //         where: {
-    //             idUsuarioModificacion: idUsuario 
-    //         },
-    //     });
-    //     return actividadesUsuario    
+    }
+    
+    async obtenerEliminadas(): Promise<AuditoriaActividades[]>{
+        const actividadesEliminadas: AuditoriaActividades[] = await this.auditoriaActividadesRepo.find({
+            where: {
+                estado: EstadosActividadEnum.ELIMINADO
+            },
+        });
+        return actividadesEliminadas    
         
-    // }
+    }
 
-    async obtenerActividadesUsuario(usuario: Usuario): Promise<AuditoriaActividades[]> {   // vvvvvvvveeeeeeeeeerrrrrrrrrr, devuelve todas y no solo la de un usuario
+    async obtenerActividadesUsuario(usuario: Usuario): Promise<AuditoriaActividades[]> {  
 
         const actividadesUsuario: AuditoriaActividades[] = await this.auditoriaActividadesRepo.find({
             where: {
@@ -59,6 +67,42 @@ export class AuditoriaActividadesService{
             }
         });
         return actividadesUsuario; 
+        
+    }
+
+    async obtenerActividadesPendientesUsuario(usuario: Usuario): Promise<AuditoriaActividades[]> {   
+
+        const actividadesPendientesUsuario: AuditoriaActividades[] = await this.auditoriaActividadesRepo.find({
+            where: {
+                idUsuarioModificacion: usuario,
+                estado: EstadosActividadEnum.PENDIENTE
+            }
+        });
+        return actividadesPendientesUsuario; 
+        
+    }
+
+    async obtenerActividadesFinalizadasUsuario(usuario: Usuario): Promise<AuditoriaActividades[]> {   
+
+        const actividadesFinalizadasUsuario: AuditoriaActividades[] = await this.auditoriaActividadesRepo.find({
+            where: {
+                idUsuarioModificacion: usuario,
+                estado: EstadosActividadEnum.FINALIZADO
+            }
+        });
+        return actividadesFinalizadasUsuario; 
+        
+    }
+    
+    async obtenerActividadesEliminadasUsuario(usuario: Usuario): Promise<AuditoriaActividades[]> {   
+
+        const actividadesEliminadasUsuario: AuditoriaActividades[] = await this.auditoriaActividadesRepo.find({
+            where: {
+                idUsuarioModificacion: usuario,
+                estado: EstadosActividadEnum.ELIMINADO
+            }
+        });
+        return actividadesEliminadasUsuario; 
         
     }
 
