@@ -63,12 +63,16 @@ export class ActividadesService {
             throw new BadRequestException('La actividad no existe.')
         }
 
-        actividadExistente.descripcion = actualizarActividadDto.descripcion;
+        if(usuario.rol === RolesEnum.ADMINISTRADOR){
+            actividadExistente.descripcion = actualizarActividadDto.descripcion;
+            actividadExistente.prioridad = actualizarActividadDto.prioridad
+        } else if(usuario.rol === RolesEnum.EJECUTOR){
+            actividadExistente.estado = actualizarActividadDto.estado
+        }
+        
         actividadExistente.idUsuarioModificacion = usuario;
         actividadExistente.fechaModificacion = new Date;
-        actividadExistente.estado = actualizarActividadDto.estado
-        actividadExistente.prioridad = actualizarActividadDto.prioridad
-
+        
         try {
             await this.actividadesRepo.save(actividadExistente);
         } catch (error) {
