@@ -41,7 +41,7 @@ export class AuditoriaActividadesController {
     @UseGuards(AuthModule)
     @ApiBearerAuth()
     @Roles([RolesEnum.ADMINISTRADOR])
-    @Get('/actividadesFinalizadas')
+    @Get('/actividadesPendientes')
     async obtenerPendientes() {
         return await this.auditoriaActividadesService.obtenerPendientes();
     }
