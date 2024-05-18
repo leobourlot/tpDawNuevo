@@ -1,13 +1,15 @@
-<div class="login-container">
-    <form>
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password"required>
-      </div>
-      <button type="submit">Login</button>
+<div id="inicio-de-sesion">
+    <form [formGroup]="form">
+        <h1>Inicio de sesión</h1>
+        <div class="contenedor-input">
+            <label for="nombre-usuario">Nombre de usuario</label>
+            <input id="nombre-usuario" pInputText type="text" formControlName="nombreUsuario">
+        </div>
+        <div class="contenedor-input">
+            <label for="clave">Contraseña</label>
+            <p-password id="clave" formControlName="clave"></p-password>
+        </div>
+        <p-button label="Confirmar" (onClick)="login()"></p-button>
     </form>
 </div>
+<p-toast></p-toast>
