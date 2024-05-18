@@ -13,7 +13,7 @@ export class AuthService{
     constructor(private client: HttpClient, private router: Router){}
 
     login(nombreUsuario: string, clave: string): Observable<{ token: string }>{
-        return this.client.post<{ token: string }>("http://localhost:3000/api/auth", {
+        return this.client.post<{ token: string }>("http://localhost:3005/api/auth", {
             nombreUsuario,
             clave,
         });
