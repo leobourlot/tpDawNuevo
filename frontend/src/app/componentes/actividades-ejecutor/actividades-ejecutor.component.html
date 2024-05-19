@@ -1,0 +1,27 @@
+
+<app-base>
+  <div>
+    <h1>Panel de ejecutor de actividades</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID Actividad</th>
+          <th>Prioridad</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let actividad of actividades">
+          <td>{{ actividad.idActividad }}</td>
+          <td>{{ actividad.prioridad }}</td>
+          <td>{{ actividad.descripcion }}</td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div class="buttons">
+      <button pButton type="button" label="Eliminar Actividad" (click)="eliminarActividad()"></button>
+      <button pButton type="button" label="Finalizar" (click)="loadActividades()"></button>
+    </div>
+  </div>
+</app-base>
