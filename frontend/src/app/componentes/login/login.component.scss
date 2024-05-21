@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: aquamarine;
+    background-color: #D6DCDD;
 }
 
 #inicio-de-sesion {
@@ -11,11 +11,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: aliceblue;
+    background-color: #D6DCDD;
     padding: 1rem;
     border-radius: 10px;
     min-height: 20rem;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Sombra con desenfoque y transparencia */
+   /// box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Sombra con desenfoque y transparencia */
 }
 
 label {
@@ -23,18 +23,17 @@ label {
 }
 
 h1 {
-    font-size: 1.5rem;
     text-align: center; /* Centrar el texto dentro del h1 */
     width: 100%; /* Asegurarse de que ocupe todo el ancho del contenedor */
     margin-bottom: 2rem; /* Añadir espacio inferior para separarlo de los inputs */
 }
 
 .contenedor-input{
-    margin-bottom: 1rem; /* Añadir espacio inferior para separarlo de los inputs */
+    margin-bottom: 3px; /* Añadir espacio inferior para separarlo de los inputs */
 }
 
 .contenedor-input mat-form-field{
-    width: 300px;
+    width: 500px;
 }
 
 .contenedor-button {
@@ -45,5 +44,6 @@ h1 {
 }
 
 .contenedor-button button{
+    margin-top: 10px;
     width: 100%;
 }

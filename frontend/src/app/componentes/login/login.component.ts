@@ -8,6 +8,7 @@ import { RolesEnum } from "../../enums/roles.enum";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from "@angular/common";
 
 @Component({
     standalone:true,
@@ -15,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
     styleUrl:'../login/login.component.scss',
     selector:'app-login',
     imports:[ReactiveFormsModule,
+        CommonModule,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule],
