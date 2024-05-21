@@ -1,15 +1,21 @@
+
 <div id="inicio-de-sesion">
     <form [formGroup]="form">
         <h1>Inicio de sesión</h1>
         <div class="contenedor-input">
-            <label for="nombre-usuario">Nombre de usuario</label>
-            <input id="nombre-usuario" pInputText type="text" formControlName="nombreUsuario">
+            <mat-form-field appearance="fill">
+                <mat-label>Usuario</mat-label>
+                <input id="nombre-usuario" matInput formControlName="nombreUsuario">
+              </mat-form-field>
         </div>
         <div class="contenedor-input">
-            <label for="clave">Contraseña</label>
-            <p-password id="clave" formControlName="clave"></p-password>
+            <mat-form-field appearance="fill">
+                <mat-label>Contraseña</mat-label>
+                <input matInput type="password" id="clave" formControlName="clave">
+              </mat-form-field>
         </div>
-        <p-button label="Confirmar" (onClick)="login()"></p-button>
+        <div class="contenedor-button">
+            <button mat-raised-button color="primary" (click)="login()">Confirmar</button>
+        </div>
     </form>
 </div>
-<p-toast></p-toast>

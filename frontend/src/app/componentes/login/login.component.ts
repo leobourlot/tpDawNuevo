@@ -1,21 +1,23 @@
 import { style } from "@angular/animations";
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { ButtonModule } from 'primeng/button';
-import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.services";
 import { RolesEnum } from "../../enums/roles.enum";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     standalone:true,
     templateUrl:'../login/login.component.html',
     styleUrl:'../login/login.component.scss',
     selector:'app-login',
-    imports:[ReactiveFormsModule, InputTextModule, PasswordModule, ButtonModule, ToastModule],
+    imports:[ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule],
 })
 export class LoginComponent{
 
