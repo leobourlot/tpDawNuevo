@@ -1,35 +1,35 @@
 <app-base>
-    <div>
-      <h1>Panel de administración de actividades</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>ID Actividad</th>
-            <th>ID Usuario Actual</th>
-            <th>ID Usuario Modificación</th>
-            <th>Prioridad</th>
-            <th>Estado</th>
-            <th>Descripción</th>
-            <th>Fecha Modificación</th>
-            <th>Operación</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let actividad of actividades">
-            <td>{{ actividad.idActividad }}</td>
-            <td>{{ actividad.idUsuarioActual }}</td>
-            <td>{{ actividad.idUsuarioModificacion }}</td>
-            <td>{{ actividad.prioridad }}</td>
-            <td>{{ actividad.estado }}</td>
-            <td>{{ actividad.descripcion }}</td>
-            <td>{{ actividad.fechaModificacion | date }}</td>
-            <td>{{ operacionEnum[actividad.operacion] }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="buttons">
-        <button pButton type="button" label="Crear Actividad" (click)="crearActividad()"></button>
-        <button pButton type="button" label="Actualizar Lista" (click)="loadActividades()"></button>
-      </div>
+  <div>
+    <h1>Panel de administración de actividades</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID Actividad</th>
+          <th>ID Usuario Actual</th>
+          <th>ID Usuario Modificación</th>
+          <th>Prioridad</th>
+          <th>Estado</th>
+          <th>Descripción</th>
+          <th>Fecha Modificación</th>
+          <th>Operación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let actividad of actividades">
+          <td>{{ actividad.idActividad }}</td>
+          <td>{{ actividad.idUsuarioActual }}</td>
+          <td>{{ actividad.idUsuarioModificacion }}</td>
+          <td>{{ actividad.prioridad }}</td>
+          <td>{{ actividad.estado }}</td>
+          <td>{{ actividad.descripcion }}</td>
+          <td>{{ actividad.fechaModificacion | date }}</td>
+          <td>{{ operacionEnum[actividad.operacion] }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="buttons">
+      <button pButton type="button" label="Crear Actividad" (click)="crearActividad()"></button>
+      <button pButton type="button" label="Actualizar Lista" (click)="loadActividades()"></button>
     </div>
-  </app-base>
+  </div>
+</app-base>

@@ -1,4 +1,3 @@
-
 <div id="inicio-de-sesion">
     <form [formGroup]="form">
         <h1>Inicio de sesión</h1>
@@ -6,13 +5,13 @@
             <mat-form-field appearance="fill">
                 <mat-label>Usuario</mat-label>
                 <input id="nombre-usuario" matInput formControlName="nombreUsuario">
-              </mat-form-field>
+            </mat-form-field>
         </div>
         <div class="contenedor-input">
             <mat-form-field appearance="fill">
                 <mat-label>Contraseña</mat-label>
                 <input matInput type="password" id="clave" formControlName="clave">
-              </mat-form-field>
+            </mat-form-field>
         </div>
         <div class="contenedor-button">
             <button mat-raised-button color="primary" (click)="login()">Confirmar</button>

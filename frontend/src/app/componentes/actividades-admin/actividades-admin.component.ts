@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
-import { ActividadService } from '../../services/actividad.service';
-import { Actividad } from '../model/actividad.model';
+import { ActividadService } from '../../services/actividad.services';
+import { Actividad } from '../../model/actividad.model';
 import { BaseComponent } from '../base/base.component';
 import { OperacionActividadEnum } from '../../enums/operacion-actividad.enum'; 
 
