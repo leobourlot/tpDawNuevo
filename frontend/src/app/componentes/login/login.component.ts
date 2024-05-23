@@ -9,6 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from "@angular/common";
+import { ToastModule } from "primeng/toast";
+
 
 @Component({
     standalone:true,
@@ -19,7 +21,8 @@ import { CommonModule } from "@angular/common";
         CommonModule,
         MatFormFieldModule,
         MatInputModule,
-        MatButtonModule],
+        MatButtonModule,
+        ToastModule],
 })
 export class LoginComponent{
 

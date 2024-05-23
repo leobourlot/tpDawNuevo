@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs'
 import { RolesEnum } from '../enums/roles.enum';
+import { environment } from '../environments/environment';
 
 @Injectable({
     providedIn:'root'
@@ -13,7 +14,7 @@ export class AuthService{
     constructor(private client: HttpClient, private router: Router){}
 
     login(nombreUsuario: string, clave: string): Observable<{ token: string }>{
-        return this.client.post<{ token: string }>("http://localhost:3005/api/auth", {
+        return this.client.post<{ token: string }>(environment.apiUrl + "/auth", {
             nombreUsuario,
             clave,
         });
