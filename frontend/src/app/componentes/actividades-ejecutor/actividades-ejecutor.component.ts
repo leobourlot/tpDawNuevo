@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
-import { ActividadService } from '../../services/actividad.services';
 import { Actividad } from '../../model/actividad.model';
 import { BaseComponent } from '../base/base.component';
 import { OperacionActividadEnum } from '../../enums/operacion-actividad.enum'; // Importa el enum aquí
+import { ActividadesService } from '../../services/actividades.service';
 
 @Component({
   selector: 'app-actividades-ejecutor',
@@ -18,7 +18,7 @@ export class ActividadesEjecutorComponent implements OnInit {
   actividades: Actividad[] = [];
   operacionEnum = OperacionActividadEnum; 
 
-  constructor(private actividadService: ActividadService) {}
+  constructor(private actividadService: ActividadesService) {}
 
   ngOnInit(): void {
     this.loadActividades();
