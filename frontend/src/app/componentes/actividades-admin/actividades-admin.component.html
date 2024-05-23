@@ -1,35 +1,48 @@
 <app-base>
-  <div>
-    <h1>Panel de administración de actividades</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>ID Actividad</th>
-          <th>ID Usuario Actual</th>
-          <th>ID Usuario Modificación</th>
-          <th>Prioridad</th>
-          <th>Estado</th>
-          <th>Descripción</th>
-          <th>Fecha Modificación</th>
-          <th>Operación</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let actividad of actividades">
-          <td>{{ actividad.idActividad }}</td>
-          <td>{{ actividad.idUsuarioActual }}</td>
-          <td>{{ actividad.idUsuarioModificacion }}</td>
-          <td>{{ actividad.prioridad }}</td>
-          <td>{{ actividad.estado }}</td>
-          <td>{{ actividad.descripcion }}</td>
-          <td>{{ actividad.fechaModificacion | date }}</td>
-          <td>{{ operacionEnum[actividad.operacion] }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="buttons">
-      <button pButton type="button" label="Crear Actividad" (click)="crearActividad()"></button>
-      <button pButton type="button" label="Actualizar Lista" (click)="loadActividades()"></button>
+  <app-tabla-actividades
+    #t
+    [valores]="actividades"
+    [(filaSeleccionada)]="actividadSeleccionada"
+    [columnas]="columnas"
+  >
+    <div>
+      <p-button
+        class="accion"
+        id="añadir"
+        label="Añadir"
+        icon="pi pi-plus"
+        (onClick)="nuevo()"
+      ></p-button>
+      <p-button
+        class="accion"
+        icon="pi pi-file"
+        label="Exportar"
+        (onClick)="t.table.exportCSV()"
+        pTooltip="Exportar"
+      ></p-button>
     </div>
-  </div>
+    <div>
+      <p-button
+        class="accion"
+        icon="pi pi-pencil"
+        severity="secondary"
+        (onClick)="editar()"
+        pTooltip="Editar"
+        [disabled]="!this.actividadSeleccionada"
+      ></p-button>
+      <p-button
+        class="accion"
+        icon="pi pi-bars"
+        pTooltip="Auditoria"
+        severity="secondary"
+        [disabled]="!this.actividadSeleccionada"
+        (onClick)="auditoria()"
+      ></p-button></div
+  ></app-tabla-actividades>
 </app-base>
+<app-actividad-dialog
+  [(visible)]="dialogVisible"
+  [accion]="accion"
+  [actividad]="actividadSeleccionada"
+  (refrescar)="llenarTabla()"
+/>

@@ -4,6 +4,5 @@ export interface UsuarioDto{
 
     apellido: string;
 
-    nombres: string
-
+    nombres: string;
 }
