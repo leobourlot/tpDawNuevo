@@ -5,13 +5,13 @@ import { environment } from '../environments/environment';
 import { UsuarioDto } from '../dtos/usuario.dto';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class UsuariosService {
-  constructor(private client: HttpClient) {}
+    constructor(private client: HttpClient) { }
 
-  getUsuarios(): Observable<UsuarioDto[]> {
-    console.log(this.client.get<UsuarioDto[]>(environment?.apiUrl + '/usuarios'));
-    return this.client.get<UsuarioDto[]>(environment?.apiUrl + '/usuarios');
-  }
+    getUsuarios(): Observable<UsuarioDto[]> {
+        console.log(this.client.get<UsuarioDto[]>(environment?.apiUrl + '/usuarios'));
+        return this.client.get<UsuarioDto[]>(environment?.apiUrl + '/usuarios');
+    }
 }
