@@ -3,6 +3,7 @@ import { LoginComponent } from './componentes/login/login.component';
 import { ActividadesAdminComponent } from './componentes/actividades-admin/actividades-admin.component';
 import { adminGuard } from './guards/admin.guard';
 import { ActividadesEjecutorComponent } from './componentes/actividades-ejecutor/actividades-ejecutor.component';
+import { ejecutorGuard } from './guards/ejecutor.guard';
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 
 export const routes: Routes = [
@@ -18,8 +19,11 @@ export const routes: Routes = [
         canActivate: [adminGuard],
     },
     {
-    path:'ejecutor',
-        component: ActividadesEjecutorComponent
+        path:'ejecutor',
+        loadComponent: () =>
+            import('./componentes/actividades-ejecutor/actividades-ejecutor.component').then(
+                (mod) => mod.ActividadesEjecutorComponent),
+        canActivate: [ejecutorGuard],
 
     },
     {
