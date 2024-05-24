@@ -1,0 +1,35 @@
+<app-base>
+  <app-tabla-actividades
+    #t
+    [valores]="usuarios"
+    [(filaSeleccionada)]="usuarioSeleccionado"
+    [columnas]="columnas"
+  >
+    <div>
+      <p-button
+        class="accion"
+        id="añadir"
+        label="Añadir"
+        icon="pi pi-plus"
+        (onClick)="nuevo()"
+      ></p-button>
+      
+    </div>
+    <div>
+      <p-button
+        class="accion"
+        icon="pi pi-pencil"
+        severity="secondary"
+        (onClick)="editar()"
+        pTooltip="Editar"
+        [disabled]="!this.usuarioSeleccionado"
+      ></p-button>
+      </div
+  ></app-tabla-actividades>
+</app-base>
+<app-usuario-dialog
+  [(visible)]="dialogVisible"
+  [accion]="accion"
+  [usuario]="usuarioSeleccionado"
+  (refrescar)="llenarTabla()"
+/>

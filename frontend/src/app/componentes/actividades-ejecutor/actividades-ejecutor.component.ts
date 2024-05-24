@@ -25,10 +25,10 @@ export class ActividadesEjecutorComponent implements OnInit {
   }
 /*
   loadActividades() {
-    this.actividadService.gettareasEjecutor().subscribe((data) => {
-      this.actividades = data;
+    // this.actividadService.gettareasEjecutor().subscribe((data) => {
+    //   this.actividades = data;
       console.log('Actividades del ejecutor:', this.actividades);
-    });
+    // });
   }
 */
   eliminarActividad() {
