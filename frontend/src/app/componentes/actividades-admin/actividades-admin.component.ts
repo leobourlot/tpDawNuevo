@@ -105,6 +105,6 @@ export class ActividadesAdminComponent {
   }
 
   auditoria() {
-    this.router.navigateByUrl('/auditoria/' + this.actividadSeleccionada!.idActividad);
+    this.router.navigateByUrl('/auditoriaActividades/actividadesModificadas' + this.actividadSeleccionada!.idActividad);
   }
 }
