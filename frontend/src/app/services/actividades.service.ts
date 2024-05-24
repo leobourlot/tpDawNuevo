@@ -26,6 +26,7 @@ export class ActividadesService {
   }
 
   editar(actividadDto: EditActividadDto) {
+    console.log('ActividadID: ' + actividadDto.id)
     return this.client.put(
       environment?.apiUrl + '/actividades/' + actividadDto.id,
       actividadDto

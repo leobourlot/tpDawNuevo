@@ -51,7 +51,7 @@ export class ActividadesAdminComponent {
 
   ngOnInit() {
     this.columnas = [
-      { field: 'id', header: 'Id' },
+      { field: 'idActividad', header: 'Id' },
       { field: 'descripcion', header: 'Descripción', filter: true },
       { field: 'prioridad', header: 'Prioridad' },
       { field: 'responsable', header: 'Responsable' },

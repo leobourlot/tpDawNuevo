@@ -21,15 +21,16 @@ export class ActividadesEjecutorComponent implements OnInit {
   constructor(private actividadService: ActividadesService) {}
 
   ngOnInit(): void {
-    this.loadActividades();
+//    this.loadActividades();
   }
-
+/*
   loadActividades() {
     this.actividadService.gettareasEjecutor().subscribe((data) => {
       this.actividades = data;
       console.log('Actividades del ejecutor:', this.actividades);
     });
   }
+*/
   eliminarActividad() {
   
   console.log('Eliminar Actividad');
