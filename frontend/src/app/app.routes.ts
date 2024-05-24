@@ -31,6 +31,14 @@ export const routes: Routes = [
 
     },
     {
+        path:'auditorias',
+        loadComponent: () =>
+            import('./componentes/auditorias/auditorias.component').then(
+                (mod) => mod.AuditoriasComponent),
+        canActivate: [adminGuard],
+    
+        },
+    {
         path: '**',
         redirectTo: 'login',
     },
