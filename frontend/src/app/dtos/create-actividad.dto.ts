@@ -4,7 +4,7 @@ import { UsuarioDto } from './usuario.dto';
 export interface CreateActividadDto {
   descripcion: string;
 
-  usuarioActual: UsuarioDto;
+  idUsuarioActual: number;
 
   prioridad: PrioridadesEnum;
 }

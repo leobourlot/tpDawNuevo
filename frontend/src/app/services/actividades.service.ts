@@ -20,16 +20,17 @@ export class ActividadesService {
 
   crear(actividadDto: CreateActividadDto): Observable<ActividadDto> {
     return this.client.post<ActividadDto>(
-      environment?.apiUrl + '/actividades',
+      environment?.apiUrl + '/actividades/nueva',
       actividadDto
     );
   }
 
   editar(actividadDto: EditActividadDto) {
-    console.log('ActividadID: ' + actividadDto.id)
+    const { idActividad, ...dataWithoutId } = actividadDto;
+
     return this.client.put(
-      environment?.apiUrl + '/actividades/' + actividadDto.id,
-      actividadDto
+      environment?.apiUrl + '/actividades/actualizar/' + actividadDto.idActividad,
+      dataWithoutId
     );
   }
 

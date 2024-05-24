@@ -18,21 +18,21 @@ export class ActividadesService {
     }
 
     async obtenerActividades(usuario: Usuario): Promise<Actividad[]> {
-
         const rol: RolesEnum = usuario.rol;
-
+    
         const consulta = this.actividadesRepo
             .createQueryBuilder('actividades')
-            .innerJoin('actividades.idUsuarioActual', 'usuario');
-
+            .innerJoinAndSelect('actividades.idUsuarioActual', 'usuarioActual')
+            .innerJoinAndSelect('actividades.idUsuarioModificacion', 'usuarioModificacion');
+    
         if (rol === RolesEnum.EJECUTOR) {
             consulta.where('actividades.estado = :estado', {
                 estado: EstadosActividadEnum.PENDIENTE
-            }).andWhere('usuario.idUsuario = :idUsuario', {
+            }).andWhere('usuarioActual.idUsuario = :idUsuario', {
                 idUsuario: usuario.idUsuario
-            })
+            });
         }
-
+    
         return await consulta.getMany();
     }
 

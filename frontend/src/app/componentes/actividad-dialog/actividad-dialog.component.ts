@@ -53,7 +53,7 @@ export class ActividadDialogComponent {
   form = new FormGroup({
     id: new FormControl<number | null>(null),
     descripcion: new FormControl<string | null>(null, [Validators.required]),
-    usuarioActual: new FormControl<UsuarioDto | null>(null, [
+    idUsuarioActual: new FormControl<UsuarioDto | null>(null, [
       Validators.required,
     ]),
     prioridad: new FormControl<PrioridadesEnum | null>(null, [
@@ -84,11 +84,11 @@ export class ActividadDialogComponent {
 
   llenarForm() {
     this.form.patchValue({
-      id: this.actividad!.id as number,
+      id: this.actividad!.idActividad as number,
       descripcion: this.actividad!.descripcion,
       prioridad: this.actividad!.prioridad,
       estado: this.actividad!.estado,
-      usuarioActual: this.actividad!.usuarioActual,
+      idUsuarioActual: this.actividad!.idUsuarioActual,
     });
   }
 
@@ -119,10 +119,10 @@ export class ActividadDialogComponent {
     if (this.actividad) {
       this.actividadesService
         .editar({
-          id: actividadDto.id!,
+          idActividad: actividadDto.id!,
           descripcion: actividadDto.descripcion!,
           prioridad: actividadDto.prioridad!,
-          usuarioActual: actividadDto.usuarioActual!,
+          idUsuarioActual: actividadDto.idUsuarioActual!.idUsuario,
           estado: actividadDto.estado!,
         })
         .subscribe({
@@ -146,7 +146,7 @@ export class ActividadDialogComponent {
         .crear({
           descripcion: actividadDto.descripcion!,
           prioridad: actividadDto.prioridad!,
-          usuarioActual: actividadDto.usuarioActual!,
+          idUsuarioActual: actividadDto.idUsuarioActual!.idUsuario,
         })
         .subscribe({
           next: (res) => {

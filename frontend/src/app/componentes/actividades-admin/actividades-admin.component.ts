@@ -74,7 +74,8 @@ export class ActividadesAdminComponent {
   llenarTabla() {
     this.actividadesService.getActividades().subscribe({
       next: (res) => {
-        this.actividades = res;
+        console.log(res);
+        this.actividades = this.transformarDatos(res);
       },
       error: (err) => {
         this.messageService.add({
@@ -83,6 +84,13 @@ export class ActividadesAdminComponent {
         });
       },
     });
+  }
+
+  transformarDatos(data: ActividadDto[]): ActividadDto[] {
+    return data.map(actividad => ({
+      ...actividad,
+      responsable: actividad.idUsuarioActual ? actividad.idUsuarioActual.nombreUsuario : ''
+    }));
   }
 
   nuevo() {
@@ -97,6 +105,6 @@ export class ActividadesAdminComponent {
   }
 
   auditoria() {
-    this.router.navigateByUrl('/auditoria/' + this.actividadSeleccionada!.id);
+    this.router.navigateByUrl('/auditoria/' + this.actividadSeleccionada!.idActividad);
   }
 }

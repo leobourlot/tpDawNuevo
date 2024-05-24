@@ -4,11 +4,11 @@ import { UsuarioDto } from './usuario.dto';
 
 export interface EditActividadDto {
 
-  id: number;
+  idActividad: number;
 
   descripcion: string;
 
-  usuarioActual: UsuarioDto;
+  idUsuarioActual: number;
 
   prioridad: PrioridadesEnum;
 
