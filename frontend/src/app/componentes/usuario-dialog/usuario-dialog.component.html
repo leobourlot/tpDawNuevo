@@ -1,0 +1,87 @@
+<p-dialog
+  header="{{ accion }} Usuario"
+  [(visible)]="visible"
+  (onHide)="cerrar()"
+  [modal]="true"
+>
+  <form [formGroup]="form">
+    <div class="input-container">
+      <label for="idUsuario">Id: </label>
+      <input
+        type="text"  
+        id="idUsuario"
+        optionLabel="idUsuario"
+        formControlName="idUsuario"
+        [disabled]="true"
+        readonly
+        
+      />
+    </div>
+    <div class="input-container">
+      <label for="apellido">Apellido: </label>
+      <textarea
+        id="apellido"
+        optionLabel="apellido"
+        placeholder="Ingrese su apellido"
+        formControlName="apellido"
+      ></textarea>
+    </div>
+    <div class="input-container">
+      <label for="nombres">Nombres: </label>
+      <textarea
+        id="nombres"
+        optionLabel="nombres"
+        placeholder="Ingrese sus nombres"
+        formControlName="nombres"
+      ></textarea>
+    </div>
+    <div class="input-container">
+      <label for="nombreUsuario">Nombre de usuario: </label>
+      <textarea
+        id="nombreUsuario"
+        optionLabel="nombreUsuario"
+        placeholder="Ingrese su nombre de usuario"
+        formControlName="nombreUsuario"
+      ></textarea>
+    </div>
+    <div class="input-container">
+      <label for="dni">DNI: </label>
+      <textarea
+        id="dni"
+        optionLabel="dni"
+        placeholder="Ingrese su DNI"
+        formControlName="dni"
+      ></textarea>
+    </div>
+    <div class="input-container">
+      <label for="email">Email: </label>
+      <textarea
+        id="email"
+        optionLabel="email"
+        placeholder="Ingrese su email"
+        formControlName="email"
+      ></textarea>
+    </div>
+    <div class="input-container">
+      <label for="rol">Rol: </label>
+      <p-dropdown
+          id="rol"
+          appendTo="body"
+          [options]="rol"
+          formControlName="rol"
+        ></p-dropdown>
+    </div>
+    <div class="input-container">
+      <label for="clave">Clave: </label>
+      <textarea
+        id="clave"
+        optionLabel="clave"
+        placeholder="Ingrese su clave"
+        formControlName="clave"
+      ></textarea>
+    </div>
+        
+    <p-button [label]="accion" (onClick)="enviar()" />
+  </form>
+</p-dialog>
+<p-toast></p-toast>

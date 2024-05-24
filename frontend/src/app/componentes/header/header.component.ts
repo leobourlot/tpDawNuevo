@@ -3,7 +3,8 @@ import { ButtonModule } from "primeng/button";
 import { AuthService } from "../../services/auth.services";
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-header',
@@ -15,9 +16,17 @@ import {MatIconModule} from '@angular/material/icon';
 })
 
 export class HeaderComponent {
-    constructor(private authService: AuthService) { }
+    constructor(private authService: AuthService, private router: Router) { }
 
     cerrarSesion() {
         this.authService.logout();
+    }
+
+    usuarios() {
+        this.router.navigateByUrl('/usuarios');
+    }
+    
+    actividades() {
+        this.router.navigateByUrl('/actividades');
     }
 }
