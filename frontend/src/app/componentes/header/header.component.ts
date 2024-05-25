@@ -5,18 +5,29 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from "@angular/router";
+import { RolesEnum } from "../../enums/roles.enum";
+import { NgIf } from "@angular/common";
 
 @Component({
     selector: 'app-header',
     standalone: true,
     imports: [ButtonModule, MatToolbarModule,
-        MatButtonModule, MatIconModule],
+        MatButtonModule, MatIconModule, NgIf],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss',
 })
 
 export class HeaderComponent {
-    constructor(private authService: AuthService, private router: Router) { }
+
+    esEjecutor: boolean;
+    esAdmin: boolean;
+
+    constructor(private authService: AuthService, private router: Router) { 
+        this.esEjecutor = this.authService.hasRole(RolesEnum.EJECUTOR);
+        this.esAdmin = this.authService.hasRole(RolesEnum.ADMINISTRADOR);
+        console.log(this.actividadesAdmin)
+        console.log(this.actividadesEjec)
+    }
 
     cerrarSesion() {
         this.authService.logout();
@@ -26,8 +37,12 @@ export class HeaderComponent {
         this.router.navigateByUrl('/usuarios');
     }
     
-    actividades() {
-        this.router.navigateByUrl('/actividades');
+    actividadesAdmin() {
+        this.router.navigateByUrl('/admin');
+    }
+    
+    actividadesEjec() {
+        this.router.navigateByUrl('/ejecutor');
     }
 
     auditorias() {

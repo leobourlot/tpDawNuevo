@@ -118,7 +118,6 @@ export class UsuariosService {
 
     async actualizarUsuario(id: number, actualizarUsuarioDto: ActualizarUsuarioDto) {
         const {dni, email, clave, nombreUsuario, apellido, nombres, rol} = actualizarUsuarioDto;
-        console.log(apellido);
         const usuario = await this.usuariosRepo.findOne({
             where: {
                 idUsuario: id,
@@ -129,22 +128,23 @@ export class UsuariosService {
             throw new HttpException('El usuario no existe', HttpStatus.NOT_FOUND);
         }
 
-        console.log(usuario.apellido);
-
         if (dni == undefined) {
             actualizarUsuarioDto.dni = usuario.dni;
         }
         if (email == undefined) {
             actualizarUsuarioDto.email = usuario.email;
         }
-        if (clave == undefined) {
+        if (clave !== undefined) {
+            actualizarUsuarioDto.clave = await bcrypt.hash(clave, 10);
+        } else {
+            // No cambiar la clave si no está en actualizarUsuarioDto
             actualizarUsuarioDto.clave = usuario.clave;
         }
+
         if (nombreUsuario == undefined) {
             actualizarUsuarioDto.nombreUsuario = usuario.nombreUsuario;
         }
         if (apellido == undefined) {
-            console.log("Entró a la condición de apellido");
             actualizarUsuarioDto.apellido = usuario.apellido;
         }
         if (nombres == undefined) {

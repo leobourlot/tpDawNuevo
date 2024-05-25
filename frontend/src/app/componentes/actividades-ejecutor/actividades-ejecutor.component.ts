@@ -16,25 +16,25 @@ import { ActividadesService } from '../../services/actividades.service';
 })
 export class ActividadesEjecutorComponent implements OnInit {
   actividades: Actividad[] = [];
-  operacionEnum = OperacionActividadEnum; 
+  operacionEnum = OperacionActividadEnum;
 
-  constructor(private actividadService: ActividadesService) {}
+  constructor(private actividadService: ActividadesService) { }
 
   ngOnInit(): void {
-//    this.loadActividades();
+    this.loadActividades();
   }
-/*
+
   loadActividades() {
     // this.actividadService.gettareasEjecutor().subscribe((data) => {
     //   this.actividades = data;
-      console.log('Actividades del ejecutor:', this.actividades);
+    console.log('Actividades del ejecutor:', this.actividades);
     // });
   }
-*/
+
   eliminarActividad() {
-  
-  console.log('Eliminar Actividad');
-}
+
+    console.log('Eliminar Actividad');
+  }
   Finalizar() {
     console.log('Finalizar');
   }

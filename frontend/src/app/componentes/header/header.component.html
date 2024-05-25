@@ -10,9 +10,10 @@
 
 <mat-toolbar class="menuHeader" color="primary">
     <!-- <span>My App</span> -->
-    <button mat-button (click)="actividades()">Actividades</button>
-    <button mat-button (click)="usuarios()">Usuarios</button>
-    <button mat-button (click)="auditorias()">Auditorias</button>
+    <button mat-button *ngIf="!esEjecutor" (click)="actividadesAdmin()">Actividades</button>
+    <button mat-button *ngIf="!esAdmin" (click)="actividadesEjec()">Actividades</button>
+    <button mat-button *ngIf="!esEjecutor" (click)="usuarios()">Usuarios</button>
+    <button mat-button *ngIf="!esEjecutor" (click)="auditorias()">Auditorias</button>
     <span class="spacer"></span>
     <button mat-flat-button (click)="cerrarSesion()"><mat-icon>close</mat-icon>Cerrar sesión</button>
     <!-- <p-button label="Cerrar sesión" [raised]="true" icon="pi pi-times" severity="secondary" (click)="cerrarSesion()"></p-button> -->

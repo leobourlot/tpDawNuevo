@@ -36,6 +36,7 @@ import { AuthService } from '../../services/auth.services';
 })
 export class UsuariosComponent {
   usuarios!: UsuarioDto[];
+  filteredUsuarios!: UsuarioDto[];
   dialogVisible: boolean = false;
   accion!: string;
   usuarioSeleccionado!: UsuarioDto | null;
@@ -57,6 +58,7 @@ export class UsuariosComponent {
       { field: 'nombres', header: 'Nombres' },
       { field: 'email', header: 'Email' },
       { field: 'rol', header: 'Rol' },
+      { field: 'estado', header: 'Estado' },
     ];
 
     this.opcionesDeFiltro = [
@@ -76,6 +78,8 @@ export class UsuariosComponent {
     this.usuariosService.getUsuarios().subscribe({
       next: (res) => {
         this.usuarios = res;
+        this.filteredUsuarios = res;
+
       },
       error: (err) => {
         this.messageService.add({
@@ -85,6 +89,17 @@ export class UsuariosComponent {
       },
     });
 
+  }
+
+  buscar(event: Event) {
+    const query = (event.target as HTMLInputElement).value.toLowerCase();
+    this.filteredUsuarios = this.usuarios.filter(usuario =>
+      usuario.dni.toLowerCase().includes(query) ||
+      usuario.apellido.toLowerCase().includes(query) ||
+      usuario.nombres.toLowerCase().includes(query) ||
+      usuario.email.toLowerCase().includes(query) ||
+      usuario.rol.toLowerCase().includes(query)
+    );
   }
 
   nuevo() {
@@ -98,4 +113,25 @@ export class UsuariosComponent {
     this.dialogVisible = true;
   }
 
+  eliminar() {
+
+    if (this.usuarioSeleccionado) {
+      this.usuariosService.eliminar(this.usuarioSeleccionado)
+        .subscribe({
+          next: (res) => {
+            this.llenarTabla();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Usuario eliminado con éxito!',
+            });
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Ocurrió un error al eliminar el usuario',
+            });
+          },
+        });
+    }
+  }
 }

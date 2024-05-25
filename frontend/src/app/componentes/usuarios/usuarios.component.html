@@ -1,10 +1,12 @@
 <app-base>
   <app-tabla-actividades
     #t
-    [valores]="usuarios"
+    [valores]="filteredUsuarios"
     [(filaSeleccionada)]="usuarioSeleccionado"
     [columnas]="columnas"
   >
+  <input type="text" placeholder="Buscar..." (input)="buscar($event)" />
+
     <div>
       <p-button
         class="accion"
@@ -14,8 +16,7 @@
         (onClick)="nuevo()"
       ></p-button>
       
-    </div>
-    <div>
+    
       <p-button
         class="accion"
         icon="pi pi-pencil"
@@ -24,7 +25,16 @@
         pTooltip="Editar"
         [disabled]="!this.usuarioSeleccionado"
       ></p-button>
-      </div
+      <p-button
+        class="accion"
+        icon="pi pi-times"
+        color= "red"
+        severity="danger"
+        (onClick)="eliminar()"
+        pTooltip="Eliminar"
+        [disabled]="!this.usuarioSeleccionado"
+      ></p-button>
+    </div
   ></app-tabla-actividades>
 </app-base>
 <app-usuario-dialog

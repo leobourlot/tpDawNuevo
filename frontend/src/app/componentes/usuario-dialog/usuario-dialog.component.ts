@@ -134,7 +134,7 @@ export class UsuarioDialogComponent {
         }
 
         const usuarioDto = this.form.getRawValue();
-        
+
         console.log(usuarioDto);
 
         if (this.usuario) {
@@ -196,4 +196,5 @@ export class UsuarioDialogComponent {
                 });
         }
     }
+
 }

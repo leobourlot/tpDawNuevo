@@ -37,6 +37,7 @@ import { BaseComponent } from '../base/base.component';
 })
 export class ActividadesAdminComponent {
   actividades!: ActividadDto[];
+  actividadesFiltradas!: ActividadDto[];
   dialogVisible: boolean = false;
   accion!: string;
   actividadSeleccionada!: ActividadDto | null;
@@ -74,8 +75,10 @@ export class ActividadesAdminComponent {
   llenarTabla() {
     this.actividadesService.getActividades().subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.actividades = this.transformarDatos(res);
+        this.actividadesFiltradas = this.actividades;
+
       },
       error: (err) => {
         this.messageService.add({
@@ -106,5 +109,16 @@ export class ActividadesAdminComponent {
 
   auditoria() {
     this.router.navigateByUrl('/auditoriaActividades/actividadesModificadas' + this.actividadSeleccionada!.idActividad);
+  }
+
+  buscar(event: Event) {
+    const resultado = (event.target as HTMLInputElement).value.toLowerCase();
+    console.log(this.actividadesFiltradas)
+    this.actividadesFiltradas = this.actividades.filter(actividad =>
+      actividad.descripcion && actividad.descripcion.toLowerCase().includes(resultado) ||
+      actividad.prioridad && actividad.prioridad.toLowerCase().includes(resultado) ||
+      actividad.estado && actividad.estado.toLowerCase().includes(resultado) ||
+      actividad.idUsuarioActual?.nombreUsuario && actividad.idUsuarioActual.nombreUsuario.toString().includes(resultado)      
+    );
   }
 }
