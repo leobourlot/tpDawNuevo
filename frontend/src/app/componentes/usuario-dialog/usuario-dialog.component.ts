@@ -85,6 +85,7 @@ export class UsuarioDialogComponent {
         this.actividadesService.getActividades().subscribe({
             next: (res) => {
                 this.actividades = res;
+                console.log('actividades es: ', this.actividades)
             },
             error: (err) => {
                 this.messageService.add({
@@ -104,7 +105,7 @@ export class UsuarioDialogComponent {
             dni: this.usuario!.dni,
             email: this.usuario!.email,
             rol: this.usuario!.rol,
-            clave: this.usuario!.clave,
+            // clave: this.usuario!.clave,
             // actividades: this.actividades!.descripcion,
             // usuarioActual: this.actividad!.usuarioActual,
         });
@@ -146,7 +147,7 @@ export class UsuarioDialogComponent {
                     dni: usuarioDto.dni!,
                     email: usuarioDto.email!,
                     rol: usuarioDto.rol!,
-                    clave: usuarioDto.clave!,
+                    // clave: usuarioDto.clave!,
                     // actividades: usuarioDto.actividades!,
                 })
                 .subscribe({
@@ -170,6 +171,11 @@ export class UsuarioDialogComponent {
                 .crear({
                     apellido: usuarioDto.apellido!,
                     nombres: usuarioDto.nombres!,
+                    dni: usuarioDto.dni!,
+                    email: usuarioDto.email!,
+                    nombreUsuario: usuarioDto.nombreUsuario!,
+                    rol: usuarioDto.rol!,
+                    clave: usuarioDto.clave!
 
                 })
                 .subscribe({

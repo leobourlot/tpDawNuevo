@@ -60,6 +60,7 @@ export class ActividadDialogComponent {
       Validators.required,
     ]),
     estado: new FormControl<EstadosActividadEnum | null>(null),
+    clave: new FormControl<EstadosActividadEnum | null>(null),
   });
 
   constructor(

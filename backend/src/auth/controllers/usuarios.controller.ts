@@ -5,6 +5,7 @@ import { RolesEnum } from "../enums/roles-enum";
 import { AuthGuard } from "../guards/auth.guard";
 import { Usuario } from "../entities/usuario.entity";
 import { UsuarioDto } from "../dtos/usuario.dto";
+import { ActualizarUsuarioDto } from "../dtos/actualizarUsuario.dto";
 
 
 @Controller("/usuarios")
@@ -56,7 +57,7 @@ export class UsuariosController {
 
     @Put("modificar/:id")
     async actualizarUsuario(@Param('id') id: number,
-        @Body() usuarioActualizado: UsuarioDto,
+        @Body() usuarioActualizado: ActualizarUsuarioDto,
     ) {
         return await this.usuariosService.actualizarUsuario(id, usuarioActualizado);
     }

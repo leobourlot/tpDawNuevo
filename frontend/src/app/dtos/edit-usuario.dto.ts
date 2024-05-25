@@ -5,7 +5,7 @@ import { RolesEnum } from '../enums/roles.enum';
 
 export interface EditUsuarioDto {
 
-  // id: number;
+  idUsuario: number;
 
   dni: string;
 
@@ -13,7 +13,7 @@ export interface EditUsuarioDto {
 
   nombres: string;
 
-  clave: string;
+  // clave: string;
 
   email: string;
 

@@ -5,18 +5,20 @@
   [modal]="true"
 >
   <form [formGroup]="form">
-    <div class="input-container">
-      <label for="idUsuario">Id: </label>
-      <input
-        type="text"  
-        id="idUsuario"
-        optionLabel="idUsuario"
-        formControlName="idUsuario"
-        [disabled]="true"
-        readonly
+    <ng-container *ngIf="accion === 'Editar'">
+      <div class="input-container">
+        <label for="idUsuario">Id: </label>
+        <input
+          type="text"  
+          id="idUsuario"
+          optionLabel="idUsuario"
+          formControlName="idUsuario"
+          [disabled]="true"
+          readonly
         
-      />
-    </div>
+        />
+      </div>
+    </ng-container>
     <div class="input-container">
       <label for="apellido">Apellido: </label>
       <textarea
@@ -71,15 +73,17 @@
           formControlName="rol"
         ></p-dropdown>
     </div>
-    <div class="input-container">
-      <label for="clave">Clave: </label>
-      <textarea
-        id="clave"
-        optionLabel="clave"
-        placeholder="Ingrese su clave"
-        formControlName="clave"
-      ></textarea>
-    </div>
+    <ng-container *ngIf="accion === 'Crear'">
+      <div class="input-container">
+        <label for="clave">Clave: </label>
+        <textarea
+          id="clave"
+          optionLabel="clave"
+          placeholder="Ingrese su clave"
+          formControlName="clave"
+        ></textarea>
+      </div>
+  </ng-container>
         
     <p-button [label]="accion" (onClick)="enviar()" />
   </form>

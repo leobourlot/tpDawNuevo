@@ -5,6 +5,7 @@ import { Repository } from "typeorm";
 import { EstadosUsuarioEnum } from "../enums/estado-Usuario.enum";
 import * as bcrypt from 'bcrypt';
 import { UsuarioDto } from "../dtos/usuario.dto";
+import { ActualizarUsuarioDto } from "../dtos/actualizarUsuario.dto";
 
 
 
@@ -115,8 +116,8 @@ export class UsuariosService {
         return nuevoUsuario
     }
 
-    async actualizarUsuario(id: number, usuarioDto: UsuarioDto) {
-        const {dni, email, clave, nombreUsuario, apellido, nombres, rol} = usuarioDto;
+    async actualizarUsuario(id: number, actualizarUsuarioDto: ActualizarUsuarioDto) {
+        const {dni, email, clave, nombreUsuario, apellido, nombres, rol} = actualizarUsuarioDto;
         console.log(apellido);
         const usuario = await this.usuariosRepo.findOne({
             where: {
@@ -131,29 +132,29 @@ export class UsuariosService {
         console.log(usuario.apellido);
 
         if (dni == undefined) {
-            usuarioDto.dni = usuario.dni;
+            actualizarUsuarioDto.dni = usuario.dni;
         }
         if (email == undefined) {
-            usuarioDto.email = usuario.email;
+            actualizarUsuarioDto.email = usuario.email;
         }
         if (clave == undefined) {
-            usuarioDto.clave = usuario.clave;
+            actualizarUsuarioDto.clave = usuario.clave;
         }
         if (nombreUsuario == undefined) {
-            usuarioDto.nombreUsuario = usuario.nombreUsuario;
+            actualizarUsuarioDto.nombreUsuario = usuario.nombreUsuario;
         }
         if (apellido == undefined) {
             console.log("Entró a la condición de apellido");
-            usuarioDto.apellido = usuario.apellido;
+            actualizarUsuarioDto.apellido = usuario.apellido;
         }
         if (nombres == undefined) {
-            usuarioDto.nombres = usuario.nombres;
+            actualizarUsuarioDto.nombres = usuario.nombres;
         }
         if (rol == undefined) {
-            usuarioDto.rol = usuario.rol;
+            actualizarUsuarioDto.rol = usuario.rol;
         }
 
-        await this.usuariosRepo.update(id, usuarioDto);
+        await this.usuariosRepo.update(id, actualizarUsuarioDto);
         return usuario;
     }
 }

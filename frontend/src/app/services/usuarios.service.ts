@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { UsuarioDto } from '../dtos/usuario.dto';
 import { CreateUsuarioDto } from '../dtos/create-usuario.dto';
+import { EditUsuarioDto } from '../dtos/edit-usuario.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -16,10 +17,13 @@ export class UsuariosService {
         return this.client.get<UsuarioDto[]>(environment?.apiUrl + '/usuarios');
     }
 
-    editar(usuarioDto: UsuarioDto) {
+    editar(usuarioDto: EditUsuarioDto) {
+
+        const { idUsuario, ...datosSinId } = usuarioDto;
+
         return this.client.put(
             environment?.apiUrl + '/usuarios/modificar/' + usuarioDto.idUsuario,
-            usuarioDto
+            datosSinId
         );
     }
 
