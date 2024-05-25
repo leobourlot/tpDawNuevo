@@ -29,4 +29,8 @@ export class HeaderComponent {
     actividades() {
         this.router.navigateByUrl('/actividades');
     }
+
+    auditorias() {
+        this.router.navigateByUrl('/auditorias');
+    }
 }

@@ -55,6 +55,8 @@ export class LoginComponent{
                 this.authService.setSession(res.token);
                 if(this.authService.hasRole(RolesEnum.ADMINISTRADOR)){
                     this.router.navigateByUrl('admin');
+                } else if (this.authService.hasRole(RolesEnum.EJECUTOR)) {
+                    this.router.navigateByUrl('ejecutor');
                 }else{
                     this.router.navigateByUrl('');
                 }
