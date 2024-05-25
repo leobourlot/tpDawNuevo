@@ -13,6 +13,8 @@ import { UsuariosService } from '../../services/usuarios.service';
 import { UsuarioDialogComponent } from '../usuario-dialog/usuario-dialog.component';
 import { AuthService } from '../../services/auth.services';
 import { AuditoriaDto } from '../../dtos/auditoria.dto';
+import { EstadosActividadEnum } from '../../enums/estados-actividad.enum';
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 /**
@@ -44,6 +46,13 @@ export class AuditoriasComponent {
   columnas!: { field: string; header: string; filter?: boolean }[];
   opcionesDeFiltro!: SelectItem[];
 
+  estados = Object.values(EstadosActividadEnum);
+
+
+  form = new FormGroup({
+    estado: new FormControl<EstadosActividadEnum | null>(null),
+  });
+
   constructor(
     private usuariosService: UsuariosService,
     private messageService: MessageService,
@@ -53,12 +62,12 @@ export class AuditoriasComponent {
 
   ngOnInit() {
     this.columnas = [
-      { field: 'idUsuario', header: 'Id' },
-      { field: 'dni', header: 'DNI' },
-      { field: 'apellido', header: 'Apellido' },
-      { field: 'nombres', header: 'Nombres' },
-      { field: 'email', header: 'Email' },
-      { field: 'rol', header: 'Rol' },
+      { field: 'idActividadesAuditoria', header: 'Id' },
+      { field: 'descripcion', header: 'Descripción' },
+      { field: 'fechaModificacion', header: 'Fecha' },
+      { field: 'prioridad', header: 'Prioridad' },
+      { field: 'estado', header: 'Estado' },
+      { field: 'operacion', header: 'Operacion' },
     ];
 
     this.opcionesDeFiltro = [
