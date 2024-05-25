@@ -1,27 +1,37 @@
-
 <app-base>
-  <div>
-    <h1>Panel de ejecutor de actividades</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>ID Actividad</th>
-          <th>Prioridad</th>
-          <th>Descripción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let actividad of actividades">
-          <td>{{ actividad.idActividad }}</td>
-          <td>{{ actividad.prioridad }}</td>
-          <td>{{ actividad.descripcion }}</td>
+  <app-tabla-actividades
+    #t
+    [valores]="actividades"
+    [(filaSeleccionada)]="actividadSeleccionada"
+    [columnas]="columnas"
+  >
+    <div>
+      
+        <p-button
+          class="accion"
+          id="eliminar"
+          label="Eliminar"
+          icon="pi pi-trash"
+          (onClick)="eliminar()"
+        ></p-button>
+      </div>
+      <div>
+        <p-button
+          class="accion"
+          id="finalizar"
+          icon="pi pi-check"
+          label="Finalizar"
+          (onClick)="finalizar()"
           
-        </tr>
-      </tbody>
-    </table>
-    <div class="buttons">
-      <button pButton type="button" label="Eliminar Actividad" (click)="eliminarActividad()"></button>
-      <button pButton type="button" label="Finalizar"></button>
-    </div>
-  </div>
+        ></p-button>
+      </div>
+      
+    
+  ></app-tabla-actividades>
 </app-base>
+<app-actividad-dialog
+  [(visible)]="dialogVisible"
+  [accion]="accion"
+  [actividad]="actividadSeleccionada"
+  (refrescar)="llenarTabla()"
+/>
