@@ -2,8 +2,7 @@
   header="{{ accion }} Usuario"
   [(visible)]="visible"
   (onHide)="cerrar()"
-  [modal]="true"
->
+  [modal]="true">
   <form [formGroup]="form">
     <ng-container *ngIf="accion === 'Editar'">
       <div class="input-container">
@@ -14,9 +13,7 @@
           optionLabel="idUsuario"
           formControlName="idUsuario"
           [disabled]="true"
-          readonly
-        
-        />
+          readonly/>
       </div>
     </ng-container>
     <div class="input-container">
@@ -25,8 +22,8 @@
         id="apellido"
         optionLabel="apellido"
         placeholder="Ingrese su apellido"
-        formControlName="apellido"
-      ></textarea>
+        formControlName="apellido">
+      </textarea>
     </div>
     <div class="input-container">
       <label for="nombres">Nombres: </label>
@@ -34,8 +31,8 @@
         id="nombres"
         optionLabel="nombres"
         placeholder="Ingrese sus nombres"
-        formControlName="nombres"
-      ></textarea>
+        formControlName="nombres">
+      </textarea>
     </div>
     <div class="input-container">
       <label for="nombreUsuario">Nombre de usuario: </label>
@@ -43,8 +40,8 @@
         id="nombreUsuario"
         optionLabel="nombreUsuario"
         placeholder="Ingrese su nombre de usuario"
-        formControlName="nombreUsuario"
-      ></textarea>
+        formControlName="nombreUsuario">
+      </textarea>
     </div>
     <div class="input-container">
       <label for="dni">DNI: </label>
@@ -52,8 +49,8 @@
         id="dni"
         optionLabel="dni"
         placeholder="Ingrese su DNI"
-        formControlName="dni"
-      ></textarea>
+        formControlName="dni">
+      </textarea>
     </div>
     <div class="input-container">
       <label for="email">Email: </label>
@@ -61,8 +58,8 @@
         id="email"
         optionLabel="email"
         placeholder="Ingrese su email"
-        formControlName="email"
-      ></textarea>
+        formControlName="email">
+      </textarea>
     </div>
     <div class="input-container">
       <label for="rol">Rol: </label>
@@ -70,8 +67,8 @@
           id="rol"
           appendTo="body"
           [options]="rol"
-          formControlName="rol"
-        ></p-dropdown>
+          formControlName="rol">
+      </p-dropdown>
     </div>
     <ng-container *ngIf="accion === 'Crear'">
       <div class="input-container">
@@ -80,11 +77,10 @@
           id="clave"
           optionLabel="clave"
           placeholder="Ingrese su clave"
-          formControlName="clave"
-        ></textarea>
+          formControlName="clave">
+        </textarea>
       </div>
   </ng-container>
-        
     <p-button [label]="accion" (onClick)="enviar()" />
   </form>
 </p-dialog>

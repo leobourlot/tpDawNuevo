@@ -9,8 +9,7 @@
   [(selection)]="filaSeleccionada"
   (onRowSelect)="seleccionar()"
   [paginator]="true"
-  [rows]="5"
->
+  [rows]="5">
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -24,8 +23,8 @@
           [matchModeOptions]="opcionesDeFiltro"
           [showAddButton]="false"
           [showClearButton]="false"
-          [showApplyButton]="false"
-        ></p-columnFilter>
+          [showApplyButton]="false">
+        </p-columnFilter>
       </th>
     </tr>
   </ng-template>

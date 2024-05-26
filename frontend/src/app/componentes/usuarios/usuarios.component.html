@@ -3,28 +3,23 @@
     #t
     [valores]="filteredUsuarios"
     [(filaSeleccionada)]="usuarioSeleccionado"
-    [columnas]="columnas"
-  >
-  <input type="text" placeholder="Buscar..." (input)="buscar($event)" />
-
+    [columnas]="columnas">
     <div>
       <p-button
         class="accion"
         id="añadir"
         label="Añadir"
         icon="pi pi-plus"
-        (onClick)="nuevo()"
-      ></p-button>
-      
-    
+        (onClick)="nuevo()">
+      </p-button>
       <p-button
         class="accion"
         icon="pi pi-pencil"
         severity="secondary"
         (onClick)="editar()"
         pTooltip="Editar"
-        [disabled]="!this.usuarioSeleccionado"
-      ></p-button>
+        [disabled]="!this.usuarioSeleccionado">
+      </p-button>
       <p-button
         class="accion"
         icon="pi pi-times"
@@ -32,11 +27,15 @@
         severity="danger"
         (onClick)="eliminar()"
         pTooltip="Eliminar"
-        [disabled]="!this.usuarioSeleccionado"
-      ></p-button>
-    </div
-  ></app-tabla-actividades>
+        [disabled]="!this.usuarioSeleccionado">
+      </p-button>
+    </div>
+    <div>
+      <input type="text" pInputText placeholder="Buscar..." (input)="buscar($event)" />
+    </div>
+  </app-tabla-actividades>
 </app-base>
+
 <app-usuario-dialog
   [(visible)]="dialogVisible"
   [accion]="accion"

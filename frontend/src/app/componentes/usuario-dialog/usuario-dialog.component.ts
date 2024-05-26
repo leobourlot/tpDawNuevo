@@ -1,14 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-    FormControl,
-    FormGroup,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import {FormControl,FormGroup,ReactiveFormsModule,Validators} from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { UsuarioDto } from '../../dtos/usuario.dto';
-// import { PrioridadesEnum } from '../../enums/prioridades.enum';
-// import { EstadosActividadEnum } from '../../enums/estados-actividad.enum';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { ActividadesService } from '../../services/actividades.service';
@@ -35,21 +28,14 @@ import { RolesEnum } from '../../enums/roles.enum';
     styleUrl: './usuario-dialog.component.scss',
 })
 export class UsuarioDialogComponent {
+
     @Input({ required: true }) visible!: boolean;
-
     @Output() visibleChange = new EventEmitter<boolean>();
-
     @Output() refrescar = new EventEmitter<boolean>();
-
     @Input({ required: true }) accion!: string;
-
     @Input({ required: false }) usuario!: UsuarioDto | null;
-
     actividades!: ActividadDto[];
-
     rol = Object.values(RolesEnum);
-
-    // estados = Object.values(EstadosActividadEnum);
 
     form = new FormGroup({
         idUsuario: new FormControl<number | null>(null),
@@ -72,7 +58,6 @@ export class UsuarioDialogComponent {
         rol: new FormControl<RolesEnum | null>(null, [
             Validators.required,
         ]),
-        // actividades: new FormControl<ActividadDto[] | null>(null),
     });
 
     constructor(
@@ -105,9 +90,6 @@ export class UsuarioDialogComponent {
             dni: this.usuario!.dni,
             email: this.usuario!.email,
             rol: this.usuario!.rol,
-            // clave: this.usuario!.clave,
-            // actividades: this.actividades!.descripcion,
-            // usuarioActual: this.actividad!.usuarioActual,
         });
     }
 
@@ -135,8 +117,6 @@ export class UsuarioDialogComponent {
 
         const usuarioDto = this.form.getRawValue();
 
-        console.log(usuarioDto);
-
         if (this.usuario) {
             this.usuariosService
                 .editar({
@@ -147,8 +127,6 @@ export class UsuarioDialogComponent {
                     dni: usuarioDto.dni!,
                     email: usuarioDto.email!,
                     rol: usuarioDto.rol!,
-                    // clave: usuarioDto.clave!,
-                    // actividades: usuarioDto.actividades!,
                 })
                 .subscribe({
                     next: (res) => {
@@ -196,5 +174,4 @@ export class UsuarioDialogComponent {
                 });
         }
     }
-
 }

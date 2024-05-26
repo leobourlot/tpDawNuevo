@@ -5,11 +5,15 @@
     }
   }
   
-  @media only screen and (min-width: 600px) {
-    :host ::ng-deep {
-      .p-button {
-        margin-bottom: 0rem;
-      }
+@media only screen and (min-width: 600px) {
+  :host ::ng-deep {
+    .p-button {
+      margin-bottom: 0rem;
     }
   }
+}
+
+label{
+  margin-bottom: 10px;
+}
   

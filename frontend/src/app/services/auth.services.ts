@@ -45,5 +45,4 @@ export class AuthService{
 
         return new JwtHelperService().decodeToken(token).rol === rol;
     }
-
 }

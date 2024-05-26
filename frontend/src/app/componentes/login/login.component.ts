@@ -1,4 +1,3 @@
-import { style } from "@angular/animations";
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MessageService } from 'primeng/api';
@@ -10,7 +9,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from "@angular/common";
 import { ToastModule } from "primeng/toast";
-
 
 @Component({
     standalone:true,
@@ -33,9 +31,7 @@ export class LoginComponent{
 
     constructor(private messageService:MessageService, private router:Router, private authService:AuthService){}
 
-    ngOninit(){
-
-    }
+    ngOninit(){}
 
     login(){
         if(!this.form.valid){
@@ -69,5 +65,4 @@ export class LoginComponent{
             },
         });
     }
-
 }
