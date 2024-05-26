@@ -33,5 +33,4 @@ export class ActividadesService {
       dataWithoutId
     );
   }
-
 }

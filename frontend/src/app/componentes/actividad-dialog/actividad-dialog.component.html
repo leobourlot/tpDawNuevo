@@ -2,8 +2,8 @@
   header="{{ accion }} Actividad"
   [(visible)]="visible"
   (onHide)="cerrar()"
-  [modal]="true"
->
+  [modal]="true">
+
   <form [formGroup]="form">
     <div class="input-container">
       <label for="descripcion">Descripción: </label>
@@ -12,8 +12,8 @@
         cols="30"
         pInputTextarea
         id="descripcion"
-        formControlName="descripcion"
-      ></textarea>
+        formControlName="descripcion">
+      </textarea>
     </div>
     <div class="input-container">
       <label for="idUsuarioActual">Responsable: </label>
@@ -22,8 +22,8 @@
         [options]="usuarios"
         optionLabel="nombreUsuario"
         placeholder="Seleccionar"
-        formControlName="idUsuarioActual"
-      />
+        formControlName="idUsuarioActual">
+      </p-dropdown>
     </div>
     <div class="input-container">
       <label for="prioridad">Prioridad: </label>
@@ -32,8 +32,8 @@
         appendTo="body"
         placeholder="Seleccionar"
         [options]="prioridades"
-        formControlName="prioridad"
-      ></p-dropdown>
+        formControlName="prioridad">
+      </p-dropdown>
     </div>
     <ng-container *ngIf="actividad">
       <div class="input-container">
@@ -42,11 +42,12 @@
           id="estado"
           appendTo="body"
           [options]="estados"
-          formControlName="estado"
-        ></p-dropdown>
+          formControlName="estado">
+        </p-dropdown>
       </div>
     </ng-container>
-    <p-button [label]="accion" (onClick)="enviar()" />
+    <p-button [label]="accion" (onClick)="enviar()">
+    </p-button>
   </form>
 </p-dialog>
 <p-toast></p-toast>

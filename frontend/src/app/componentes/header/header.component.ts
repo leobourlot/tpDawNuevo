@@ -16,9 +16,7 @@ import { NgIf } from "@angular/common";
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss',
 })
-
 export class HeaderComponent {
-
     esEjecutor: boolean;
     esAdmin: boolean;
 

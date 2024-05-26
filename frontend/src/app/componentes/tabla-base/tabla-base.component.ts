@@ -1,15 +1,8 @@
 import { DatePipe, NgFor, NgIf } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import {Component,EventEmitter,Input,Output,ViewChild} from '@angular/core';
 import { SelectItem } from 'primeng/api';
 import { Table, TableModule } from 'primeng/table';
 import { PaddingCerosPipe } from '../../pipes/padding-ceros.pipe';
-
 
 @Component({
   selector: 'app-tabla-actividades',
@@ -28,7 +21,6 @@ export class TablaBaseComponent {
   @Input('filaSeleccionada') filaSeleccionada!: any;
   @Output() filaSeleccionadaChange = new EventEmitter<any>();
   opcionesDeFiltro!: SelectItem[];
-
   @ViewChild('dt') table!: Table;
 
   constructor() {}

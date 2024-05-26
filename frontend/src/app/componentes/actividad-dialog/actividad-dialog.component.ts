@@ -1,10 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import {FormControl,FormGroup,ReactiveFormsModule,Validators} from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { UsuarioDto } from '../../dtos/usuario.dto';
 import { PrioridadesEnum } from '../../enums/prioridades.enum';
@@ -18,6 +13,7 @@ import { NgIf } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { UsuariosService } from '../../services/usuarios.service';
+
 @Component({
   selector: 'app-actividad-dialog',
   standalone: true,
@@ -34,20 +30,15 @@ import { UsuariosService } from '../../services/usuarios.service';
   styleUrl: './actividad-dialog.component.scss',
 })
 export class ActividadDialogComponent {
+
   @Input({ required: true }) visible!: boolean;
-
   @Output() visibleChange = new EventEmitter<boolean>();
-
   @Output() refrescar = new EventEmitter<boolean>();
-
   @Input({ required: true }) accion!: string;
-
   @Input({ required: false }) actividad!: ActividadDto | null;
-
+  
   usuarios!: UsuarioDto[];
-
   prioridades = Object.values(PrioridadesEnum);
-
   estados = Object.values(EstadosActividadEnum);
 
   form = new FormGroup({
@@ -143,12 +134,11 @@ export class ActividadDialogComponent {
           },
         });
     } else {
-      this.actividadesService
-        .crear({
-          descripcion: actividadDto.descripcion!,
-          prioridad: actividadDto.prioridad!,
-          idUsuarioActual: actividadDto.idUsuarioActual!.idUsuario,
-        })
+      this.actividadesService.crear({
+        descripcion: actividadDto.descripcion!,
+        prioridad: actividadDto.prioridad!,
+        idUsuarioActual: actividadDto.idUsuarioActual!.idUsuario,
+      })
         .subscribe({
           next: (res) => {
             this.cerrar();

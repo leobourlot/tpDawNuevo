@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component} from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
@@ -12,6 +12,7 @@ import { UsuarioDto } from '../../dtos/usuario.dto';
 import { UsuariosService } from '../../services/usuarios.service';
 import { UsuarioDialogComponent } from '../usuario-dialog/usuario-dialog.component';
 import { AuthService } from '../../services/auth.services';
+import { InputTextModule } from 'primeng/inputtext';
 
 /**
  * Pantalla para los usuarios con el rol de ADMINISTRADOR
@@ -29,7 +30,8 @@ import { AuthService } from '../../services/auth.services';
     RouterModule,
     TablaBaseComponent,
     TableModule,
-    BaseComponent
+    BaseComponent,
+    InputTextModule
   ],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.scss',
@@ -46,8 +48,6 @@ export class UsuariosComponent {
   constructor(
     private usuariosService: UsuariosService,
     private messageService: MessageService,
-    private authService: AuthService,
-    private router: Router
   ) { }
 
   ngOnInit() {

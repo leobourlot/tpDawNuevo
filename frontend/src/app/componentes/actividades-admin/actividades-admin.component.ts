@@ -1,7 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { HeaderComponent } from '../header/header.component';
-import { FooterComponent } from '../footer/footer.component';
-import { Table, TableModule } from 'primeng/table';
+import { Component} from '@angular/core';
+import { TableModule } from 'primeng/table';
 import { ActividadDto } from '../../dtos/actividad.dto';
 import { ActividadesService } from '../../services/actividades.service';
 import { ButtonModule } from 'primeng/button';
@@ -13,6 +11,7 @@ import { ToastModule } from 'primeng/toast';
 import { Router, RouterModule } from '@angular/router';
 import { TablaBaseComponent } from '../tabla-base/tabla-base.component';
 import { BaseComponent } from '../base/base.component';
+import { InputTextModule } from 'primeng/inputtext';
 
 /**
  * Pantalla para los usuarios con el rol de ADMINISTRADOR
@@ -30,7 +29,8 @@ import { BaseComponent } from '../base/base.component';
     RouterModule,
     TablaBaseComponent,
     TableModule,
-    BaseComponent
+    BaseComponent,
+    InputTextModule
   ],
   templateUrl: './actividades-admin.component.html',
   styleUrl: './actividades-admin.component.scss',
@@ -75,7 +75,6 @@ export class ActividadesAdminComponent {
   llenarTabla() {
     this.actividadesService.getActividades().subscribe({
       next: (res) => {
-        // console.log(res);
         this.actividades = this.transformarDatos(res);
         this.actividadesFiltradas = this.actividades;
 
@@ -113,7 +112,6 @@ export class ActividadesAdminComponent {
 
   buscar(event: Event) {
     const resultado = (event.target as HTMLInputElement).value.toLowerCase();
-    console.log(this.actividadesFiltradas)
     this.actividadesFiltradas = this.actividades.filter(actividad =>
       actividad.descripcion && actividad.descripcion.toLowerCase().includes(resultado) ||
       actividad.prioridad && actividad.prioridad.toLowerCase().includes(resultado) ||

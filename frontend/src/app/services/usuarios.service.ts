@@ -38,7 +38,6 @@ export class UsuariosService {
         const { idUsuario } = usuarioDto;
         return this.client.delete(
             environment?.apiUrl + '/usuarios/eliminar/' + idUsuario
-            // datosSinId
         );
     }
 }

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component} from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
@@ -12,12 +12,12 @@ import { UsuarioDto } from '../../dtos/usuario.dto';
 import { UsuariosService } from '../../services/usuarios.service';
 import { UsuarioDialogComponent } from '../usuario-dialog/usuario-dialog.component';
 import { AuthService } from '../../services/auth.services';
-import { AuditoriaDto } from '../../dtos/auditoria.dto';
 import { EstadosActividadEnum } from '../../enums/estados-actividad.enum';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuditoriaActividadesService } from '../../services/auditoriaactividades.services';
 import { AuditoriaActividadDto } from '../../dtos/auditoria-actividades.dto';
-
+import { DropdownModule } from 'primeng/dropdown';
+import { ReactiveFormsModule } from '@angular/forms';
 
 /**
  * Pantalla para las auditorias
@@ -35,7 +35,9 @@ import { AuditoriaActividadDto } from '../../dtos/auditoria-actividades.dto';
     RouterModule,
     TablaBaseComponent,
     TableModule,
-    BaseComponent
+    BaseComponent,
+    DropdownModule,
+    ReactiveFormsModule
   ],
   templateUrl: './auditorias.component.html',
   styleUrl: './auditorias.component.scss'
@@ -48,11 +50,10 @@ export class AuditoriasComponent {
   columnas!: { field: string; header: string; filter?: boolean }[];
   opcionesDeFiltro!: SelectItem[];
   usuarios!: UsuarioDto[];
-
   estados = Object.values(EstadosActividadEnum);
 
-
   form = new FormGroup({
+    idUsuarioActual: new FormControl<UsuarioDto | null>(null),
     estado: new FormControl<EstadosActividadEnum | null>(null),
   });
 
@@ -60,8 +61,6 @@ export class AuditoriasComponent {
     private usuariosService: UsuariosService,
     private auditoriaActividadesService: AuditoriaActividadesService,
     private messageService: MessageService,
-    private authService: AuthService,
-    private router: Router
   ) { }
 
   ngOnInit() {
@@ -86,16 +85,26 @@ export class AuditoriasComponent {
         label: 'Contiene',
       },
     ];
+
+    this.form.get('idUsuarioActual')!.valueChanges.subscribe(selectedValue => {
+      this.llenarTabla(selectedValue);
+    });
+    
     this.llenarTabla();
   }
 
-  llenarTabla() {
+  llenarTabla(idUsuarioActual?: UsuarioDto | null) {
     this.usuariosService.getUsuarios().subscribe({
       next: (usuarios) => {
         this.usuarios = usuarios;
         this.auditoriaActividadesService.getAuditorias().subscribe({
           next: (auditorias) => {
-            this.auditorias = this.transformarDatos(auditorias, usuarios);
+            const auditoriasTransformadas = this.transformarDatos(auditorias, usuarios);
+            if (idUsuarioActual) {
+              this.auditorias = this.filtrarAuditoriasPorUsuario(auditoriasTransformadas, idUsuarioActual.idUsuario);
+            } else {
+              this.auditorias = auditoriasTransformadas;
+            }
           },
           error: (err) => {
             this.messageService.add({
@@ -123,9 +132,12 @@ export class AuditoriasComponent {
     }));
   }
 
+  filtrarAuditoriasPorUsuario(auditorias: AuditoriaActividadDto[], idUsuario: any): AuditoriaActividadDto[] {
+    return auditorias.filter(auditoria => auditoria.idUsuarioActual.idUsuario === idUsuario);
+  }
+
   getNombreUsuario(id: any, usuarios: UsuarioDto[]): string {
     console.log('id es: ', id)
-    // console.log('usuarios es: ', usuarios)
     const usuario = usuarios.find(u => u.idUsuario === id);
     console.log('nombreUsuario es: ', usuario?.nombreUsuario)
     return usuario ? usuario.nombreUsuario : 'Desconocido';
@@ -141,5 +153,4 @@ export class AuditoriasComponent {
     this.accion = 'Editar';
     this.dialogVisible = true;
   }
-
 }
