@@ -20,4 +20,8 @@ export class AuditoriaActividadesService {
   getUsuarios(): Observable<UsuarioDto[]> {
     return this.client.get<UsuarioDto[]>(environment?.apiUrl + '/usuarios');
   }
+
+  
+
+
 }
