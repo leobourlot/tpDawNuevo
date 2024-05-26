@@ -15,6 +15,8 @@ import { AuthService } from '../../services/auth.services';
 import { AuditoriaDto } from '../../dtos/auditoria.dto';
 import { EstadosActividadEnum } from '../../enums/estados-actividad.enum';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AuditoriaActividadesService } from '../../services/auditoriaactividades.services';
+import { AuditoriaActividadDto } from '../../dtos/auditoria-actividades.dto';
 
 
 /**
@@ -39,12 +41,13 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrl: './auditorias.component.scss'
 })
 export class AuditoriasComponent {
-  auditorias!: AuditoriaDto[];
+  auditorias!: AuditoriaActividadDto[];
   dialogVisible: boolean = false;
   accion!: string;
-  auditoriaSeleccionada!: UsuarioDto | null;
+  auditoriaSeleccionada!: AuditoriaActividadDto | null;
   columnas!: { field: string; header: string; filter?: boolean }[];
   opcionesDeFiltro!: SelectItem[];
+  usuarios!: UsuarioDto[];
 
   estados = Object.values(EstadosActividadEnum);
 
@@ -55,6 +58,7 @@ export class AuditoriasComponent {
 
   constructor(
     private usuariosService: UsuariosService,
+    private auditoriaActividadesService: AuditoriaActividadesService,
     private messageService: MessageService,
     private authService: AuthService,
     private router: Router
@@ -68,6 +72,8 @@ export class AuditoriasComponent {
       { field: 'prioridad', header: 'Prioridad' },
       { field: 'estado', header: 'Estado' },
       { field: 'operacion', header: 'Operacion' },
+      { field: 'idUsuarioActual', header: 'Responsable' },
+      { field: 'idUsuarioModificacion', header: 'Resp. Ultima Mod.' },
     ];
 
     this.opcionesDeFiltro = [
@@ -84,20 +90,45 @@ export class AuditoriasComponent {
   }
 
   llenarTabla() {
-    /*
     this.usuariosService.getUsuarios().subscribe({
-      next: (res) => {
-        this.usuarios = res;
+      next: (usuarios) => {
+        this.usuarios = usuarios;
+        this.auditoriaActividadesService.getAuditorias().subscribe({
+          next: (auditorias) => {
+            this.auditorias = this.transformarDatos(auditorias, usuarios);
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Ocurrió un error al recuperar la lista de auditorias',
+            });
+          }
+        });
       },
       error: (err) => {
         this.messageService.add({
           severity: 'error',
           summary: 'Ocurrió un error al recuperar la lista de usuarios',
         });
-      },
+      }
     });
-    */
+  }
 
+  transformarDatos(data: AuditoriaActividadDto[], usuarios: UsuarioDto[]) : AuditoriaActividadDto[] {
+    console.log('auditorias es: ', data)
+    return data.map(auditoria => ({
+      ...auditoria,
+      responsable: this.getNombreUsuario(auditoria.idUsuarioActual.idUsuario, usuarios),
+      ultimo: this.getNombreUsuario(auditoria.idUsuarioModificacion.idUsuario, usuarios)
+    }));
+  }
+
+  getNombreUsuario(id: any, usuarios: UsuarioDto[]): string {
+    console.log('id es: ', id)
+    // console.log('usuarios es: ', usuarios)
+    const usuario = usuarios.find(u => u.idUsuario === id);
+    console.log('nombreUsuario es: ', usuario?.nombreUsuario)
+    return usuario ? usuario.nombreUsuario : 'Desconocido';
   }
 
   nuevo() {

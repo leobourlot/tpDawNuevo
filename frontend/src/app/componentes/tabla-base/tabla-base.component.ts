@@ -8,11 +8,13 @@ import {
 } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 import { Table, TableModule } from 'primeng/table';
+import { PaddingCerosPipe } from '../../pipes/padding-ceros.pipe';
+
 
 @Component({
   selector: 'app-tabla-actividades',
   standalone: true,
-  imports: [TableModule, NgFor, NgIf, DatePipe],
+  imports: [TableModule, NgFor, NgIf, DatePipe, PaddingCerosPipe],
   templateUrl: './tabla-base.component.html',
   styleUrl: './tabla-base.component.scss',
 })

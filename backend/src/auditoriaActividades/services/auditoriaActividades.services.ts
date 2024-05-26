@@ -14,7 +14,9 @@ export class AuditoriaActividadesService{
     }
     
     async obtenerAuditoriasActividades(): Promise<AuditoriaActividades[]> {
-        const auditoriasActividades: AuditoriaActividades[] = await this.auditoriaActividadesRepo.find()
+        const auditoriasActividades: AuditoriaActividades[] = await this.auditoriaActividadesRepo.find({
+            relations: ['idUsuarioActual', 'idUsuarioModificacion']
+        })
 
         return auditoriasActividades
     }

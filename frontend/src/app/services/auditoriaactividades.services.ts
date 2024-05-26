@@ -5,19 +5,25 @@ import { ActividadDto } from '../dtos/actividad.dto';
 import { CreateActividadDto } from '../dtos/create-actividad.dto';
 import { EditActividadDto } from '../dtos/edit-actividad.dto';
 import { environment } from '../environments/environment';
+import { AuditoriaActividadDto } from '../dtos/auditoria-actividades.dto';
+import { UsuarioDto } from '../dtos/usuario.dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuditoriaActividadesService {
-  constructor(private client: HttpClient) {}
+  constructor(private client: HttpClient) { }
 
-  getActividades(): Observable<ActividadDto[]> {
-    return this.client.get<ActividadDto[]>(
+  getAuditorias(): Observable<AuditoriaActividadDto[]> {
+    return this.client.get<AuditoriaActividadDto[]>(
       environment?.apiUrl + '/auditoriaActividades'
     );
   }
 
- 
+  getUsuarios(): Observable<UsuarioDto[]> {
+    return this.client.get<UsuarioDto[]>(environment?.apiUrl + '/usuarios');
+  }
+
+
 
 }
