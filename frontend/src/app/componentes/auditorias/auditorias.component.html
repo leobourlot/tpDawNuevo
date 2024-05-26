@@ -1,20 +1,27 @@
 <app-base>
-  <app-tabla-actividades
-    #t
-    [valores]="auditorias"
-    [(filaSeleccionada)]="auditoriaSeleccionada"
-    [columnas]="columnas">
-    <div class="input-container">
-      <label for="idUsuarioActual">Responsable</label>
-      <form [formGroup]="form">
-        <p-dropdown
-          id="usuario"
-          [options]="usuarios"
-          optionLabel="nombreUsuario"
-          placeholder="Seleccionar"
-          formControlName="idUsuarioActual">
-        </p-dropdown>
-      </form>
-    </div>
-  </app-tabla-actividades>
+  <form [formGroup]="form">
+    <app-tabla-actividades
+      #t
+      [valores]="auditoriasFiltradas"
+      [(filaSeleccionada)]="auditoriaSeleccionada"
+      [columnas]="columnas">
+      <div>
+        <label for="idUsuarioActual">Responsable:</label>
+          <p-dropdown
+            id="usuario"
+            [options]="usuarios"
+            optionLabel="nombreUsuario"
+            placeholder="Seleccionar"
+            formControlName="idUsuarioActual">
+          </p-dropdown>
+      </div>
+      <div>
+          <input
+            type="text"
+            pInputText
+            formControlName="searchTerm"
+            placeholder="Buscar..."/>
+      </div>
+    </app-tabla-actividades>
+  </form>
 </app-base>

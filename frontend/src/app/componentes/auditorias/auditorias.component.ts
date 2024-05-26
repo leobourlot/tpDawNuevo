@@ -18,6 +18,9 @@ import { AuditoriaActividadesService } from '../../services/auditoriaactividades
 import { AuditoriaActividadDto } from '../../dtos/auditoria-actividades.dto';
 import { DropdownModule } from 'primeng/dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { RolesEnum } from '../../enums/roles.enum'; // Asegúrate de importar el enum RolesEnum correctamente
+
 
 /**
  * Pantalla para las auditorias
@@ -37,13 +40,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     TableModule,
     BaseComponent,
     DropdownModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputTextModule,
   ],
   templateUrl: './auditorias.component.html',
   styleUrl: './auditorias.component.scss'
 })
 export class AuditoriasComponent {
   auditorias!: AuditoriaActividadDto[];
+  auditoriasFiltradas!: AuditoriaActividadDto[];
   dialogVisible: boolean = false;
   accion!: string;
   auditoriaSeleccionada!: AuditoriaActividadDto | null;
@@ -55,6 +60,7 @@ export class AuditoriasComponent {
   form = new FormGroup({
     idUsuarioActual: new FormControl<UsuarioDto | null>(null),
     estado: new FormControl<EstadosActividadEnum | null>(null),
+    searchTerm: new FormControl<string>('')
   });
 
   constructor(
@@ -89,22 +95,33 @@ export class AuditoriasComponent {
     this.form.get('idUsuarioActual')!.valueChanges.subscribe(selectedValue => {
       this.llenarTabla(selectedValue);
     });
+
+    this.form.get('searchTerm')!.valueChanges.subscribe(searchTerm => {
+      this.llenarTabla(this.form.get('idUsuarioActual')!.value, searchTerm);
+    });
     
     this.llenarTabla();
   }
 
-  llenarTabla(idUsuarioActual?: UsuarioDto | null) {
+  llenarTabla(idUsuarioActual?: UsuarioDto | null, searchTerm?: string | null) {
     this.usuariosService.getUsuarios().subscribe({
       next: (usuarios) => {
         this.usuarios = usuarios;
+        this.agregoOpcionASelector(usuarios);
         this.auditoriaActividadesService.getAuditorias().subscribe({
           next: (auditorias) => {
             const auditoriasTransformadas = this.transformarDatos(auditorias, usuarios);
-            if (idUsuarioActual) {
-              this.auditorias = this.filtrarAuditoriasPorUsuario(auditoriasTransformadas, idUsuarioActual.idUsuario);
-            } else {
-              this.auditorias = auditoriasTransformadas;
+            let filtradas = auditoriasTransformadas;
+
+            if (idUsuarioActual && idUsuarioActual.idUsuario !== null) {
+              filtradas = this.filtrarAuditoriasPorUsuario(filtradas, idUsuarioActual.idUsuario);
             }
+
+            if (searchTerm) {
+              filtradas = this.filtrarAuditoriasPorBusqueda(filtradas, searchTerm);
+            }
+
+            this.auditoriasFiltradas = filtradas;
           },
           error: (err) => {
             this.messageService.add({
@@ -133,7 +150,35 @@ export class AuditoriasComponent {
   }
 
   filtrarAuditoriasPorUsuario(auditorias: AuditoriaActividadDto[], idUsuario: any): AuditoriaActividadDto[] {
-    return auditorias.filter(auditoria => auditoria.idUsuarioActual.idUsuario === idUsuario);
+    if(idUsuario == 0){
+      return auditorias
+    }else{
+      return auditorias.filter(auditoria => auditoria.idUsuarioActual.idUsuario === idUsuario);
+    }
+  }
+
+  filtrarAuditoriasPorBusqueda(auditorias: AuditoriaActividadDto[], searchTerm: string): AuditoriaActividadDto[] {
+    return auditorias.filter(auditoria =>
+      Object.values(auditoria).some(value =>
+        value && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }
+
+  agregoOpcionASelector(usuarios: UsuarioDto[]){
+    // Agregar opción vacía al principio de la lista de usuarios
+    const usuarioTodos: UsuarioDto = {
+      idUsuario: 0,
+      apellido: '',
+      nombres: '',
+      nombreUsuario: 'Todos',
+      dni: '',
+      email: '',
+      rol: RolesEnum.ADMINISTRADOR, // Asigna un rol válido según tu enum
+      clave: ''
+    };
+    this.usuarios.push(usuarioTodos); // Agrega la opción "Todos" al principio de la lista
+
   }
 
   getNombreUsuario(id: any, usuarios: UsuarioDto[]): string {
@@ -152,5 +197,15 @@ export class AuditoriasComponent {
   editar() {
     this.accion = 'Editar';
     this.dialogVisible = true;
+  }
+
+  buscar(event: Event) {
+    const resultado = (event.target as HTMLInputElement).value.toLowerCase();
+    this.auditorias = this.auditorias.filter(auditoria =>
+      auditoria.descripcion && auditoria.descripcion.toLowerCase().includes(resultado) ||
+      auditoria.prioridad && auditoria.prioridad.toLowerCase().includes(resultado) ||
+      auditoria.estado && auditoria.estado.toLowerCase().includes(resultado) ||
+      auditoria.idUsuarioActual?.nombreUsuario && auditoria.idUsuarioActual.nombreUsuario.toString().includes(resultado)      
+    );
   }
 }
