@@ -24,6 +24,7 @@ export class AuditoriaActividadesService {
     return this.client.get<UsuarioDto[]>(environment?.apiUrl + '/usuarios');
   }
 
+  
 
 
 }

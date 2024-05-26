@@ -34,4 +34,8 @@ export class ActividadesService {
     );
   }
 
+  eliminar(idActividad: number): Observable<any> {
+    return this.client.delete(`${environment.apiUrl}/auditoriaActividades/eliminar/${idActividad}`);
+  }
+
 }
