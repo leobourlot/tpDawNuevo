@@ -1,17 +1,35 @@
-main {
-    height: 100vh;
-    top: 10vh;
-    bottom: 10vh;
-    overflow: auto;
-    position: fixed !important;
-    width: 100%;
-    background-color: aliceblue;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 2rem;
-    flex-direction: column;
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
+
+main {
+  flex: 1; /* El contenido principal tomará todo el espacio disponible */
+  width: 100%;
+  height: 80%;
+  background-color: aliceblue;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2rem;
+  flex-direction: column;
+}
+
+// main {
+//     height: 80vh;
+//     top: 10vh;
+//     bottom: 10vh;
+//     overflow: auto;
+//     position: fixed !important;
+//     width: 100%;
+//     background-color: aliceblue;
+//     display: flex;
+//     justify-content: flex-start;
+//     align-items: center;
+//     padding: 2rem;
+//     flex-direction: column;
+// }
 
 @media only screen and (min-height: 400px) {
   .main {
