@@ -35,6 +35,15 @@
         [disabled]="!this.actividadSeleccionada"
         (onClick)="auditoria()">
       </p-button>
+      <p-button
+          class="accion"
+          icon="pi pi-times"
+          color= "red"
+          severity="danger"
+          (onClick)="eliminar()"
+          [disabled]="!this.actividadSeleccionada">
+
+        </p-button>
     </div>
     <div>
       <input type="text" pInputText placeholder="Buscar..." (input)="buscar($event)" />

@@ -3,13 +3,13 @@ import { EstadosActividadEnum } from '../enums/estados-actividad.enum';
 
 export interface EditActividadDto {
 
-  idActividad: number;
+  idActividad: number | null;
 
-  descripcion: string;
+  descripcion: string | null;
 
-  idUsuarioActual: number;
+  idUsuarioActual: number | null;
 
-  prioridad: PrioridadesEnum;
+  prioridad: PrioridadesEnum | null;
 
-  estado: EstadosActividadEnum;
+  estado: EstadosActividadEnum | null;
 }

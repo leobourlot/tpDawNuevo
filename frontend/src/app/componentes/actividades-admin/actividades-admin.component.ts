@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { ActividadDto } from '../../dtos/actividad.dto';
 import { ActividadesService } from '../../services/actividades.service';
@@ -48,7 +48,7 @@ export class ActividadesAdminComponent {
     private actividadesService: ActividadesService,
     private messageService: MessageService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.columnas = [
@@ -110,13 +110,39 @@ export class ActividadesAdminComponent {
     this.router.navigateByUrl('/auditoriaActividades/actividadesModificadas' + this.actividadSeleccionada!.idActividad);
   }
 
+  eliminar() {
+    if (this.actividadSeleccionada) {
+      this.actividadesService.eliminar(this.actividadSeleccionada.idActividad)
+        .subscribe({
+          next: (res) => {
+            this.llenarTabla();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Actividad eliminada con éxito!',
+            });
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Ocurrió un error al eliminar la actividad',
+            });
+          },
+        });
+    } else {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Seleccione una actividad para eliminar',
+      });
+    }
+  }
+
   buscar(event: Event) {
     const resultado = (event.target as HTMLInputElement).value.toLowerCase();
     this.actividadesFiltradas = this.actividades.filter(actividad =>
       actividad.descripcion && actividad.descripcion.toLowerCase().includes(resultado) ||
       actividad.prioridad && actividad.prioridad.toLowerCase().includes(resultado) ||
       actividad.estado && actividad.estado.toLowerCase().includes(resultado) ||
-      actividad.idUsuarioActual?.nombreUsuario && actividad.idUsuarioActual.nombreUsuario.toString().includes(resultado)      
+      actividad.idUsuarioActual?.nombreUsuario && actividad.idUsuarioActual.nombreUsuario.toString().includes(resultado)
     );
   }
 }

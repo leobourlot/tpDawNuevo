@@ -15,6 +15,9 @@ import { TablaBaseComponent } from '../tabla-base/tabla-base.component';
 import { BaseComponent } from '../base/base.component';
 import { AuditoriaActividadDto } from '../../dtos/auditoria-actividades.dto';
 import { AuditoriaActividadesService } from '../../services/auditoriaactividades.services';
+import { RolesEnum } from '../../enums/roles.enum';
+import { EstadosActividadEnum } from '../../enums/estados-actividad.enum';
+import { EditActividadDto } from '../../dtos/edit-actividad.dto';
 
 /**
  * Pantalla para los usuarios con el rol de EJECUTOR
@@ -124,7 +127,37 @@ export class ActividadesEjecutorComponent {
   }
 
   finalizar() {
-    this.accion = 'Finalizar';
-    this.dialogVisible = true;
+    if (this.actividadSeleccionada) {
+      this.actividadSeleccionada.estado = EstadosActividadEnum.FINALIZADO;
+      const editActividadDto: EditActividadDto = {
+        idActividad: this.actividadSeleccionada.idActividad,
+        descripcion: this.actividadSeleccionada.descripcion || '', // Asignar cadena vacía si es null
+        idUsuarioActual: this.actividadSeleccionada.idUsuarioActual ? this.actividadSeleccionada.idUsuarioActual.idUsuario : null, // Asignar el id del usuario o null
+        prioridad: this.actividadSeleccionada.prioridad,
+        estado: this.actividadSeleccionada.estado
+    };
+            
+      this.actividadesService.editar(editActividadDto)
+        .subscribe({
+          next: (res) => {
+            this.llenarTabla();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Actividad modificada con éxito!',
+            });
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Ocurrió un error al eliminar la actividad',
+            });
+          },
+        });
+    } else {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Seleccione una actividad para eliminar',
+      });
+    }
   }
 }

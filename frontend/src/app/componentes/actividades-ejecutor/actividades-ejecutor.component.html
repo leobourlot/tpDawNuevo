@@ -12,7 +12,9 @@
           id="eliminar"
           label="Eliminar"
           icon="pi pi-trash"
+          severity="danger"
           (onClick)="eliminar()"
+          [disabled]="!this.actividadSeleccionada"
         ></p-button>
       </div>
       <div>
@@ -22,7 +24,7 @@
           icon="pi pi-check"
           label="Finalizar"
           (onClick)="finalizar()"
-          
+          [disabled]="!this.actividadSeleccionada"
         ></p-button>
       </div>
       
