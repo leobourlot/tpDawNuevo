@@ -27,20 +27,13 @@
       pTooltip="Editar"
       [disabled]="!this.actividadSeleccionada">
       </p-button>
-      <p-button
-        class="accion"
-        icon="pi pi-bars"
-        pTooltip="Auditoria"
-        severity="secondary"
-        [disabled]="!this.actividadSeleccionada"
-        (onClick)="auditoria()">
-      </p-button>
+      
       <p-button
           class="accion"
           icon="pi pi-times"
           color= "red"
           severity="danger"
-          (onClick)="eliminar()"
+          (onClick)="confirmarEliminacion($event)"
           [disabled]="!this.actividadSeleccionada">
 
         </p-button>
@@ -50,6 +43,8 @@
     </div>
   </app-tabla-actividades>
 </app-base>
+<p-toast/>
+<p-confirmDialog/>
 
 <app-actividad-dialog
   [(visible)]="dialogVisible"

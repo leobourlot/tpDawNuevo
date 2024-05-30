@@ -25,7 +25,7 @@
         icon="pi pi-times"
         color= "red"
         severity="danger"
-        (onClick)="eliminar()"
+        (onClick)="confirmarEliminacion($event)"
         pTooltip="Eliminar"
         [disabled]="!this.usuarioSeleccionado">
       </p-button>
@@ -35,6 +35,8 @@
     </div>
   </app-tabla-actividades>
 </app-base>
+<p-toast/>
+<p-confirmDialog/>
 
 <app-usuario-dialog
   [(visible)]="dialogVisible"

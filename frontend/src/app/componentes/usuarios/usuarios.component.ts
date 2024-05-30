@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { NgFor, NgIf } from '@angular/common';
 import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { Router, RouterModule } from '@angular/router';
 import { TablaBaseComponent } from '../tabla-base/tabla-base.component';
@@ -33,7 +34,7 @@ import { InputTextModule } from 'primeng/inputtext';
     TableModule,
     BaseComponent,
     InputTextModule,
-
+    ConfirmDialogModule,
   ],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.scss',
@@ -50,6 +51,7 @@ export class UsuariosComponent {
   constructor(
     private usuariosService: UsuariosService,
     private messageService: MessageService,
+    private confirmationDialogModule: ConfirmDialogModule,
     private confirmationService: ConfirmationService
 
   ) { }
@@ -138,5 +140,26 @@ export class UsuariosComponent {
         });
     }
   }
+
+  confirmarEliminacion(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: '¿Estás seguro de que quieres eliminar el usuario?',
+      header: 'Confirmar eliminación',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass:"p-button-danger p-button-text",
+      rejectButtonStyleClass:"p-button-text p-button-text",
+      acceptLabel:"Si",
+      rejectLabel:"No",
+      acceptIcon:"none",
+      rejectIcon:"none",
+
+      accept: () => {
+          this.eliminar();
+      },
+      reject: () => {
+      }
+  });
+}
   
 }

@@ -13,7 +13,7 @@
           label="Eliminar"
           icon="pi pi-trash"
           severity="danger"
-          (onClick)="eliminar()"
+          (onClick)="confirmarEliminacion($event)"
           [disabled]="!this.actividadSeleccionada"
         ></p-button>
       </div>
@@ -23,7 +23,7 @@
           id="finalizar"
           icon="pi pi-check"
           label="Finalizar"
-          (onClick)="finalizar()"
+          (onClick)="confirmarFinalizar($event)"
           [disabled]="!this.actividadSeleccionada"
         ></p-button>
       </div>
@@ -31,3 +31,5 @@
     
   ></app-tabla-actividades>
 </app-base>
+<p-toast/>
+<p-confirmDialog/>

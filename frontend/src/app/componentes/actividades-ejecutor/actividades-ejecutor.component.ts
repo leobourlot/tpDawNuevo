@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { ActividadDialogComponent } from '../actividad-dialog/actividad-dialog.component';
 import { NgFor, NgIf } from '@angular/common';
-import { MessageService, SelectItem } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Router, RouterModule } from '@angular/router';
 import { TablaBaseComponent } from '../tabla-base/tabla-base.component';
@@ -18,6 +18,8 @@ import { AuditoriaActividadesService } from '../../services/auditoriaactividades
 import { RolesEnum } from '../../enums/roles.enum';
 import { EstadosActividadEnum } from '../../enums/estados-actividad.enum';
 import { EditActividadDto } from '../../dtos/edit-actividad.dto';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
 
 /**
  * Pantalla para los usuarios con el rol de EJECUTOR
@@ -35,7 +37,8 @@ import { EditActividadDto } from '../../dtos/edit-actividad.dto';
     RouterModule,
     TablaBaseComponent,
     TableModule,
-    BaseComponent
+    BaseComponent,
+    ConfirmDialogModule
   ],
   templateUrl: './actividades-ejecutor.component.html',
   styleUrl: './actividades-ejecutor.component.scss',
@@ -53,6 +56,7 @@ export class ActividadesEjecutorComponent {
     private actividadesService: ActividadesService,
     private auditoriaactividadesService: AuditoriaActividadesService,
     private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private router: Router
   ) { }
 
@@ -159,5 +163,47 @@ export class ActividadesEjecutorComponent {
         summary: 'Seleccione una actividad para eliminar',
       });
     }
+  }
+
+  confirmarEliminacion(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: '¿Estás seguro de que quieres eliminar la actividad?',
+      header: 'Confirmar eliminación',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptLabel: "Si",
+      rejectLabel: "No",
+      acceptIcon: "none",
+      rejectIcon: "none",
+
+      accept: () => {
+        this.eliminar();
+      },
+      reject: () => {
+      }
+    });
+  }
+
+  confirmarFinalizar(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: '¿Estás seguro de que quieres finalizar la actividad?',
+      header: 'Confirmar finalización',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptLabel: "Si",
+      rejectLabel: "No",
+      acceptIcon: "none",
+      rejectIcon: "none",
+
+      accept: () => {
+        this.finalizar();
+      },
+      reject: () => {
+      }
+    });
   }
 }

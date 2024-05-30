@@ -6,12 +6,13 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { ActividadDialogComponent } from '../actividad-dialog/actividad-dialog.component';
 import { NgFor, NgIf } from '@angular/common';
-import { MessageService, SelectItem } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Router, RouterModule } from '@angular/router';
 import { TablaBaseComponent } from '../tabla-base/tabla-base.component';
 import { BaseComponent } from '../base/base.component';
 import { InputTextModule } from 'primeng/inputtext';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 /**
  * Pantalla para los usuarios con el rol de ADMINISTRADOR
@@ -30,7 +31,8 @@ import { InputTextModule } from 'primeng/inputtext';
     TablaBaseComponent,
     TableModule,
     BaseComponent,
-    InputTextModule
+    InputTextModule,
+    ConfirmDialogModule
   ],
   templateUrl: './actividades-admin.component.html',
   styleUrl: './actividades-admin.component.scss',
@@ -47,6 +49,7 @@ export class ActividadesAdminComponent {
   constructor(
     private actividadesService: ActividadesService,
     private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private router: Router
   ) { }
 
@@ -106,10 +109,6 @@ export class ActividadesAdminComponent {
     this.dialogVisible = true;
   }
 
-  auditoria() {
-    this.router.navigateByUrl('/auditoriaActividades/actividadesModificadas' + this.actividadSeleccionada!.idActividad);
-  }
-
   eliminar() {
     if (this.actividadSeleccionada) {
       this.actividadesService.eliminar(this.actividadSeleccionada.idActividad)
@@ -145,4 +144,27 @@ export class ActividadesAdminComponent {
       actividad.idUsuarioActual?.nombreUsuario && actividad.idUsuarioActual.nombreUsuario.toString().includes(resultado)
     );
   }
+
+  confirmarEliminacion(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: '¿Estás seguro de que quieres eliminar la actividad?',
+      header: 'Confirmar eliminación',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptLabel: "Si",
+      rejectLabel: "No",
+      acceptIcon: "none",
+      rejectIcon: "none",
+
+      accept: () => {
+        this.eliminar();
+      },
+      reject: () => {
+      }
+    });
+  }
+  
+  
 }
