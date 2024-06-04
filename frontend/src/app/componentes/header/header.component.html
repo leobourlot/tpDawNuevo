@@ -5,5 +5,17 @@
     <button mat-button *ngIf="!esEjecutor" (click)="usuarios()">Usuarios</button>
     <button mat-button *ngIf="!esEjecutor" (click)="auditorias()">Auditorias</button>
     <span class="spacer"></span>
+    <h1 class="usuario">Usuario:  {{usuario?.nombres + ' ' + usuario?.apellido + '. Rol: ' + usuario?.rol}}</h1>
+    <p-button class="accion" icon="pi pi-user" severity="secondary" (onClick)="verDatos()" pTooltip="Editar" ></p-button>
+
+    <!-- <span class="spacer"></span> -->
+
     <button mat-flat-button (click)="cerrarSesion()"><mat-icon>close</mat-icon>Cerrar sesión</button>
 </mat-toolbar>
+
+<app-datosUsuario-dialog
+  [(visible)]="dialogVisible"
+  [accion]="accion"
+  [usuario]="usuario"
+  
+/>

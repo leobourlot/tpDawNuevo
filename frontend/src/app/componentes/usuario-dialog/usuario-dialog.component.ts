@@ -70,7 +70,7 @@ export class UsuarioDialogComponent {
         this.actividadesService.getActividades().subscribe({
             next: (res) => {
                 this.actividades = res;
-                console.log('actividades es: ', this.actividades)
+                // console.log('actividades es: ', this.actividades)
             },
             error: (err) => {
                 this.messageService.add({

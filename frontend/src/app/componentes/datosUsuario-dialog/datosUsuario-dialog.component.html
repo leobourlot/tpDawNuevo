@@ -1,0 +1,83 @@
+<p-dialog
+  header="{{ accion }} usuario"
+  [(visible)]="visible"
+  (onHide)="cerrar()"
+  [modal]="true">
+  <form [formGroup]="form">
+      <div class="input-container">
+        <label for="idUsuario">Id: </label>
+        <input
+          type="text"  
+          id="idUsuario"
+          optionLabel="idUsuario"
+          formControlName="idUsuario"
+          [disabled]="true"
+          readonly/>
+      </div>
+    <div class="input-container">
+      <label for="apellido">Apellido: </label>
+      <textarea
+        id="apellido"
+        optionLabel="apellido"
+        formControlName="apellido"
+        [disabled]="true"
+        readonly
+        >        
+      </textarea>
+    </div>
+    <div class="input-container">
+      <label for="nombres">Nombres: </label>
+      <textarea
+        id="nombres"
+        optionLabel="nombres"
+        formControlName="nombres"
+        [disabled]="true"
+        readonly
+        >
+      </textarea>
+    </div>
+    <div class="input-container">
+      <label for="nombreUsuario">Nombre de usuario: </label>
+      <textarea
+        id="nombreUsuario"
+        optionLabel="nombreUsuario"
+        formControlName="nombreUsuario"
+        [disabled]="true"
+        readonly>
+      </textarea>
+    </div>
+    <div class="input-container">
+      <label for="dni">DNI: </label>
+      <textarea
+        id="dni"
+        optionLabel="dni"
+        formControlName="dni"
+        [disabled]="true"
+        readonly>
+      </textarea>
+    </div>
+    <div class="input-container">
+      <label for="email">Email: </label>
+      <textarea
+        id="email"
+        optionLabel="email"
+        formControlName="email"
+        [disabled]="true"
+        readonly>
+      </textarea>
+    </div>
+    <div class="input-container">
+      <label for="rol">Rol: </label>
+      <textarea
+          id="rol"
+          appendTo="body"
+          
+          formControlName="rol"
+          [disabled]="true"
+          readonly>
+      </textarea>
+    </div>
+    
+  </form>
+</p-dialog>
+<p-toast></p-toast>
