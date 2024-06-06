@@ -23,7 +23,7 @@ label {
 }
 
 h1 {
-    color: #3a3a3a;
+    color: #004874;
     text-align: center; /* Centrar el texto dentro del h1 */
     width: 100%; /* Asegurarse de que ocupe todo el ancho del contenedor */
     margin-bottom: 2rem; /* Añadir espacio inferior para separarlo de los inputs */
@@ -47,4 +47,13 @@ h1 {
 .contenedor-button button{
     margin-top: 10px;
     width: 100%;
+}
+
+#button-confirmar{
+   ///Xubio background-color: #004874;
+   background-color: #004874;
+}
+
+#button-confirmar{
+    color: white;
 }

@@ -21,6 +21,7 @@ img{
 }
 
 .usuario{
+    font-size: 15px;
     margin-right: 1vw;
 }
 
@@ -31,3 +32,41 @@ img{
 .mat-mdc-button-ripple{
     background: brown!important;
 }
+
+#headerId {
+   //background: linear-gradient(to right, white, #004874);
+   background-color: #004874;
+}
+
+#button-nav {
+    position: relative;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+#button-nav::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: #29a5db;
+    transition: all 0.3s ease;
+}
+
+#button-nav:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.usuario{
+    font-size: 14px;
+    color: white;
+}
+
+#button-user{
+    background-color: white;
+    color: black;
+}
+

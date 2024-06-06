@@ -13,6 +13,8 @@ import { TablaBaseComponent } from '../tabla-base/tabla-base.component';
 import { BaseComponent } from '../base/base.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 /**
  * Pantalla para los usuarios con el rol de ADMINISTRADOR
@@ -32,7 +34,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     TableModule,
     BaseComponent,
     InputTextModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './actividades-admin.component.html',
   styleUrl: './actividades-admin.component.scss',

@@ -1,15 +1,15 @@
-<mat-toolbar class="menuHeader" color="primary">
-    <img src="../../../assets/imagenes/FixMaq.png" />
-    <button mat-button *ngIf="!esEjecutor" (click)="actividadesAdmin()">Actividades</button>
-    <button mat-button *ngIf="!esAdmin" (click)="actividadesEjec()">Actividades</button>
-    <button mat-button *ngIf="!esEjecutor" (click)="usuarios()">Usuarios</button>
-    <button mat-button *ngIf="!esEjecutor" (click)="auditorias()">Auditorias</button>
+<mat-toolbar class="menuHeader" id="headerId">
+    <img src="../../../assets/imagenes/FixMaq_transparent.png" />
+    <button mat-button id="button-nav" *ngIf="!esEjecutor" (click)="actividadesAdmin()">Actividades</button>
+    <button mat-button id="button-nav" *ngIf="!esAdmin" (click)="actividadesEjec()">Actividades</button>
+    <button mat-button id="button-nav" *ngIf="!esEjecutor" (click)="usuarios()">Usuarios</button>
+    <button mat-button id="button-nav" *ngIf="!esEjecutor" (click)="auditorias()">Auditorias</button>
     <span class="spacer"></span>
     <h1 class="usuario">Usuario:  {{usuario?.nombres + ' ' + usuario?.apellido + '. Rol: ' + usuario?.rol}}</h1>
-    <p-button class="accion" icon="pi pi-user" severity="secondary" (onClick)="verDatos()" pTooltip="Editar" ></p-button>
-
+    <button id="button-user" mat-button class="accion"(click)="verDatos()" pTooltip="Editar">
+      <span class="pi pi-user"></span>
+    </button>
     <!-- <span class="spacer"></span> -->
-
     <button mat-flat-button (click)="cerrarSesion()"><mat-icon>close</mat-icon>Cerrar sesión</button>
 </mat-toolbar>
 
