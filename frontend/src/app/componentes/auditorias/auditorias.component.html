@@ -22,6 +22,16 @@
             formControlName="searchTerm"
             placeholder="Buscar..."/>
       </div>
+      <p-button
+        class="accion"
+        icon="pi pi-file"
+        label="Exportar"
+        severity="secondary"
+        rounded="true"
+        (onClick)="t.table.exportCSV()"
+        pTooltip="Exportar">
+      </p-button>
+      
     </app-tabla-actividades>
   </form>
 </app-base>
