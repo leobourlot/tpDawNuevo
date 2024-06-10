@@ -26,10 +26,22 @@
           (onClick)="confirmarFinalizar($event)"
           [disabled]="!this.actividadSeleccionada"
         ></p-button>
+        
+      </div>
+      <div>
+        <p-button
+        class="accion"
+        icon="pi pi-file"
+        label="Exportar"
+        severity="secondary"
+        rounded="true"
+        (onClick)="t.table.exportCSV()"
+        pTooltip="Exportar">
+      </p-button>
       </div>
       
     
-  ></app-tabla-actividades>
+  </app-tabla-actividades>
 </app-base>
 <p-toast/>
 <p-confirmDialog/>
